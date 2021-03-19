@@ -1,0 +1,5 @@
+- name : create a centos 8 vm on remote kvm host
+  hosts: hypervisors
+  become: true
+  roles:
+    - hosninabil.kvm_terraform.centos

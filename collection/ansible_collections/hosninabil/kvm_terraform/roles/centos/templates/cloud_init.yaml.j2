@@ -1,0 +1,23 @@
+#cloud-config
+# vim: syntax=yaml
+# examples:
+# https://cloudinit.readthedocs.io/en/latest/topics/examples.html
+ssh_pwauth: false
+disable_root: false
+users:
+  - name: {{ vm_user }}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    home: "/home/{{ vm_user }}"
+    shell: /bin/bash
+    lock_passwd: false
+    ssh-authorized-keys:
+      # - "{{ lookup('file', vm_ssh_pub) }}"
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8IynYT1n2ZjMgDeuMczQJzbnZXAvoxmXbFXlVq/o89hmjVia7vIZq+szlh3SqFBvyxAx8ysoem2Kx9jfaaN//2LdO99Rs6ZLMXBjPn1+ehv1X+b0CJoxyOJ3eBcz2du2VdYDMkvilZfrlfLTcKsMa2W/8bbFslaXyQJ1S39e81nniEcbkpLFVmVsYn9qB5KL73M+KJasT/WG3dGJfazOMqHAyQJBflfU9N/zxNuljpS28/bGjT6Z+2X97ySiCfK/HSZAd9dSAIXMmFuZCPCc8Ft5JeU+URBpM7nHQkyjR3DLBYt/IxCj9zf/YVQkhp2Hz1sQt6+viL8qPyP0fkof4gddMuUBAhtZPdyNFgsCdSxf59Q6kHsZH1xE2TtVa8GBXhBLK0MbvvKCdIChGLc92m4pXi2f5YFs2J9WvQVuhRF6Pu3OMaC+NKXKY3IEDNtsM7PdcNdrnqVkQrIq5zH0jHiBV53HabCUkJ4E0CDqY5TXju9UsQOjtROQ1wMO/Scc= nabil@nabil-pc
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9Di0WKPP0kZHgvdFOMgujJGoplf6g4k1RmHYROBM2/goijycl9U/3kixFGKSsYTI0gcVFWErxkt/EmztC1O6iWnpaVX0chRJ3otZza97NC++WJ4epKEJuKkXysBvd/az8LKDGEC3ZtZRpLeAm+qMhia/h2J93JCrp09ursLxLFrPWtEvZfC2AyuVH4lrCwt+otDeYDVDgnRW8imTd/AYgOGdOVMjO6IvhcD8krAmUCrDrq9aoJDY/Nudqkuz53d5D2GSkKLrVWQ0T2bxx76T+iMZ24Uu2ZBk47aKiaVFMf8mSF27d1FoejCyvBCIQ7vKmcM2P5puJyI6hIvVcwr1z root@primary-host.infra.otbs.local
+chpasswd:
+  list: |
+    root:{{ vm_root_password }}
+    {{ vm_user }}: {{ vm_root_password }}
+  expire: false
+final_message: "The system is finally up, after $UPTIME seconds"
