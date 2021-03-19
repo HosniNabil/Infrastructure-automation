@@ -9,7 +9,6 @@ vm_genericcloud_image_url: https://cloud.centos.org/centos/8/x86_64/images/CentO
 vm_image_name: "centos8"
 vm_root_password: "password"
 vm_user: nabil
-vm_ssh_pub: /home/nabil/.ssh/id_rsa.pub
 vm_ip: 10.112.42.57/24
 vm_gw: 10.112.42.254
 vm_dns: 8.8.8.8
