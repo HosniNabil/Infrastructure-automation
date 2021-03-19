@@ -1,0 +1,18 @@
+[rhel]
+10.112.42.80
+
+[centos]
+10.112.42.58
+
+[centos:vars]
+ansible_user = root
+
+
+[hypervisor]
+10.112.42.52
+
+[rhel:vars]
+ansible_user = nabil
+
+[hypervisor:vars]
+ansible_user = nabil
