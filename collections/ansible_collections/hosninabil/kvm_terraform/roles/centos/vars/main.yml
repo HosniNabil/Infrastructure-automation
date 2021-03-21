@@ -1,0 +1,18 @@
+---
+# vars file for kvm_machine
+golang_url: https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
+terraform_url: https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip
+terraform_dir: /root/terraform
+terraform_libvirt_provider_git: https://github.com/dmacvicar/terraform-provider-libvirt.git
+vm_volume_name: terraform_vm_volume
+vm_genericcloud_image_url: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
+vm_image_name: "centos8"
+vm_root_password: "password"
+vm_user: nabil
+vm_ip: 10.112.42.57/24
+vm_gw: 10.112.42.254
+vm_dns: 8.8.8.8
+vm_hostname: terraform-ansible
+vm_memory: 2048
+vm_cpu: 1
+vm_network: vlan42

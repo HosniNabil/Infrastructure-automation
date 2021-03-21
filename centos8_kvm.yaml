@@ -1,0 +1,15 @@
+- name : create a centos 8 vm on remote kvm host
+  hosts: hypervisor
+  become: true
+  tasks:
+    - include_role:
+        name: hosninabil.kvm_terraform.centos
+      vars:
+        vm_hostname: 'centos-ansible'
+        vm_cpu: 1
+        vm_memory: 2048
+        vm_network: vlan42
+        vm_ip: 10.112.42.57/24
+        vm_gw: 10.112.42.254
+        vm_dns: 8.8.8.8
+        vm_user: nabil
