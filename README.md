@@ -1,19 +1,18 @@
 # Infrastructure-automation
  Automating infrastructure with Ansible & terraform
 ## Table of contents
-1. Example playbooks to use in Ansible towers
-2. Inventory file
-3. Ansible collections directory
-4. Ansible custom cfg file
+1. Example playbooks
+2. Ansible collections
 
-### Playbooks
+## Playbooks
 1. centos8_kvm
    - Use role **centos**
-### Collections
-#### Kvm_terraform
-##### Roles
-1. **centos**
-##### Vars
+## Collections
+### - kvm_terraform
+####  - Roles
+####    1. **centos**
+Create a VM using the Centos 8 generic cloud image on a kvm host using terraform  
+#### Vars
 - **golang_url** : url to download go from
 - **terraform_url** : url to download terraform terraform from
 - **terraform_libvirt_provider_git** : git project for the libvirt provider
