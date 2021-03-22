@@ -1,0 +1,10 @@
+---
+# tasks file for cleanup
+- name: cleanup terraform deployment
+  terraform:
+    project_path: "{{ terraform_dir }}"
+    state: absent
+- name: Ensure added disk are deleted
+  file:
+    path: "{{ pool_path }}/disk_name.qcow2"
+    state: absent

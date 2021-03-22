@@ -1,0 +1,10 @@
+- name: Clean up terraform deployment
+  hosts: hypervisor
+  become: true
+  tasks:
+    - include_role:
+        name: hosninabil.kvm_terraform.cleanup
+      vars:
+        terraform_dir: /root/terraform
+        disk_name: centos8_2
+        pool_path: /var/lib/libvirt/images

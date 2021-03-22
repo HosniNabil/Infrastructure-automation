@@ -15,6 +15,7 @@
 Create a VM using the Centos 8 generic cloud image on a kvm host using terraform  
 #### Vars
 - **golang_url** : url to download go from
+- **terraform_dir** : terraform working directory
 - **terraform_url** : url to download terraform terraform from
 - **terraform_libvirt_provider_git** : git project for the libvirt provider
 - **vm_volume_name** : terraform vm volume name
@@ -29,3 +30,4 @@ Create a VM using the Centos 8 generic cloud image on a kvm host using terraform
 - **vm_memory** : RAM in MB
 - **vm_cpu** : number for vpcus
 - **vm_network** : network name in the hypervisor
+- **vm_authorized_ssh** : authorized public ssh id

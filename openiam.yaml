@@ -1,0 +1,14 @@
+- name : Harden ssh and update
+  hosts: openiam
+  become: true
+  tasks:
+    - include_role:
+        name: hosninabil.linux_server.basic
+      vars:
+        hostname: 'openiam.infra.otbs.local'
+        user: 'asma'
+      tags:
+        - hostname
+        - sudo
+        - update
+        - vnc

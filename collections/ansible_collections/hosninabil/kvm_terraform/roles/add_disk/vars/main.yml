@@ -1,0 +1,7 @@
+---
+# vars file for add_disk
+disk_name: centos8_2
+disk_size: 10
+pool_path: /var/lib/libvirt/images
+vm_disk_target: sdb
+vm_hostname: terraform-ansible
