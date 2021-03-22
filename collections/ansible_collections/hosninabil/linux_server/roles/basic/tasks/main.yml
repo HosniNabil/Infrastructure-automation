@@ -1,0 +1,27 @@
+---
+# tasks file for basic-config
+#hostname
+- hostname:
+    name: "{{ hostname }}"
+#ssh
+- name: copy ssh config file
+  copy:
+    src: files/sshd_config
+    dest: /etc/ssh/sshd_conf
+    owner: root
+    group: root
+    mode: 0640
+  notify: Restart sshd
+- name: reset selinux context in selinux enabled systems
+  file:
+    path: /etc/ssh/sshd_conf
+    seuser: system_u
+    setype: etc_t
+  when: ansible_os_family == "RedHat"
+- name: update system
+  package:
+    name: '*'
+    state: latest
+- name: rebooot host and wait to confirm
+  reboot:
+    test_command: echo "reboot done via ansible"

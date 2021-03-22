@@ -5,7 +5,7 @@
     - include_role:
         name: hosninabil.kvm_terraform.centos
       vars:
-        vm_hostname: 'centos-ansible'
+        vm_hostname: 'http-server'
         vm_cpu: 1
         vm_memory: 2048
         vm_network: vlan42

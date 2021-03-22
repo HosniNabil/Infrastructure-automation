@@ -1,11 +1,14 @@
-[centos]
-10.112.42.58 ansible_user = root
 
 [terraform]
-10.112.42.57 ansible_user = nabil
+10.112.42.57
 
-[rhel]
-10.112.42.80 ansible_user = nabil
+[terraform:vars]
+ansible_user = nabil
+
 
 [hypervisor]
-10.112.42.52 ansible_user = nabil
+10.112.42.52
+
+
+[hypervisor:vars]
+ansible_user = nabil

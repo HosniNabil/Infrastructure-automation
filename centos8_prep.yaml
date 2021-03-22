@@ -1,0 +1,8 @@
+- name : Harden ssh and update
+  hosts: terraform
+  become: true
+  tasks:
+    - include_role:
+        name: hosninabil.linux_server.basic
+      vars:
+        hostname: 'http-server.infra.otbs.local'
