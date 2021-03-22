@@ -1,0 +1,6 @@
+---
+# handlers file for basic-config
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
