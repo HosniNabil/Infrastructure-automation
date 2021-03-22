@@ -1,0 +1,14 @@
+
+[terraform]
+10.112.42.57
+
+[terraform:vars]
+ansible_user = nabil
+
+
+[hypervisor]
+10.112.42.52
+
+
+[hypervisor:vars]
+ansible_user = nabil
