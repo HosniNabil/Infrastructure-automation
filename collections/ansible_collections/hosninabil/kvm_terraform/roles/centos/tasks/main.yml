@@ -76,14 +76,6 @@
     - { src: variables.tf.j2, dest: '{{ terraform_dir }}/variables.tf' }
     - { src: cloud_init.yaml.j2, dest: '{{ terraform_dir }}/config/cloud_init.yaml' }
     - { src: network_config_static.yaml.j2, dest: '{{ terraform_dir }}/config/network-config' }
-# terraform plan
-# - name: terraform plan phase
-#   terraform:
-#     project_path: "{{ terraform_dir }}"
-#     state: planned
-#     force_init: true
-#     plan_file: "{{ terraform_dir }}/tfplan"
-#   register: plan_output
 - name: Deploy terraform workload
   terraform:
     project_path: "{{ terraform_dir }}"
