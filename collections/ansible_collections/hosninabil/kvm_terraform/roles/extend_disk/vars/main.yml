@@ -1,0 +1,5 @@
+---
+# vars file for extend_disk
+pool_path: /var/lib/libvirt/images
+vm_volume_name: terraform_vm_volume
+size: 20G

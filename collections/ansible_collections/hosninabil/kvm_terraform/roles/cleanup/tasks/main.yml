@@ -6,5 +6,5 @@
     state: absent
 - name: Ensure added disk are deleted
   file:
-    path: "{{ pool_path }}/disk_name.qcow2"
+    path: "{{ pool_path }}/{{ disk_name }}.qcow2"
     state: absent
