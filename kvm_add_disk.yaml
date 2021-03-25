@@ -3,15 +3,10 @@
   become: true
   tasks:
     - include_role:
-        name: hosninabil.kvm_terraform.extend_disk
-      vars:
-        vm_hostname: 'http-server'
-        size: 2G
-    - include_role:
         name: hosninabil.kvm_terraform.add_disk
       vars:
         vm_hostname: 'http-server'
         disk_name: centos8_2
-        disk_size: 10
+        disk_size: 10G
         pool_path: /var/lib/libvirt/images
         vm_disk_target: vdb
