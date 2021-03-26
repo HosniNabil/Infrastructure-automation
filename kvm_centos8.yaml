@@ -4,11 +4,3 @@
   tasks:
     - include_role:
         name: hosninabil.kvm_terraform.centos
-      vars:
-        vm_hostname: 'http-server'
-        vm_cpu: 1
-        vm_memory: 2048
-        vm_network: vlan42
-        vm_ip: 10.112.42.57/24
-        vm_gw: 10.112.42.254
-        terraform_dir: /root/terraform
