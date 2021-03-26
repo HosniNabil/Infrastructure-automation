@@ -1,0 +1,83 @@
+---
+# tasks file for rhel
+- name: Ensure Essentials are installed
+  package:
+    name: wget,git,make,libvirt-devel,libvirt-gobject
+    state: present
+- name: Ensure Golang is installed
+  unarchive:
+    src: "{{ golang_url }}"
+    dest: /usr/local
+    remote_src: true
+- name : Ensure golang dir added to profile
+  lineinfile:
+    path: /etc/profile
+    line: export PATH=$PATH:/usr/local/go/bin
+- name: Download and unarchive terraform tarball
+  unarchive:
+    src: "{{ terraform_url }}"
+    dest: /usr/bin
+    remote_src: true
+- name: Create terraform deployment directory
+  file:
+    path: "{{ terraform_dir }}"
+    state: directory
+    mode: '0755'
+  notify: Init terraform directory
+- name: Create terraform deployment config directory
+  file:
+    path: "{{ terraform_dir }}/config"
+    state: directory
+    mode: '0755'
+- name: Create plugins directory
+  file:
+    path: "~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64"
+    state: directory
+    mode: 0755
+- name: Clone provider plugin source
+  git:
+    repo: "{{ terraform_libvirt_provider_git }}"
+    dest: "{{ terraform_dir }}/terraform-provider-libvirt"
+    force: true
+- name: Build provider plugin from source
+  make:
+    chdir: "{{ terraform_dir }}/terraform-provider-libvirt/"
+  environment:
+    PATH: /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/go/bin:/root/bin
+- name: Move provider plugin to plugin dir
+  copy:
+    src: "{{ terraform_dir }}/terraform-provider-libvirt/terraform-provider-libvirt"
+    dest: "~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64/terraform-provider-libvirt"
+    remote_src: true
+#set variables
+- name: Set variables for RHEL 7
+  set_fact:
+      vm_image_path: "{{ rhel_7_path }}"
+  when: rhel_version == '7'
+- name: Set variables for RHEL 8
+  set_fact:
+      vm_image_path: "{{ rhel_8_path }}"
+  when: rhel_version == '8'
+#copy terraform provider file
+- name: Copy tf files
+  copy:
+    src: "{{ item }}"
+    dest: "{{terraform_dir}}/{{ item }}"
+  with_items:
+    - main.tf
+    - providers.tf
+- name: Flush handlers
+  meta: flush_handlers
+- name: Template variable and cloud-init files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: variables.tf.j2, dest: '{{ terraform_dir }}/variables.tf' }
+    - { src: cloud_init.yaml.j2, dest: '{{ terraform_dir }}/config/cloud_init.yaml' }
+    - { src: network_config_static.yaml.j2, dest: '{{ terraform_dir }}/config/network-config' }
+- name: Deploy terraform workload
+  terraform:
+    project_path: "{{ terraform_dir }}"
+    state: present
+    # plan_file: "{{ terraform_dir }}/tfplan"
