@@ -28,6 +28,7 @@
     path: "{{ terraform_dir }}"
     state: directory
     mode: '0755'
+  notify: Init terraform directory
 - name: Create terraform deployment config directory
   file:
     path: "{{ terraform_dir }}/config"
@@ -68,6 +69,8 @@
   with_items:
     - main.tf
     - providers.tf
+- name: Flush handlers
+  meta: flush_handlers
 - name: Template variable and cloud-init files
   template:
     src: "{{ item.src }}"

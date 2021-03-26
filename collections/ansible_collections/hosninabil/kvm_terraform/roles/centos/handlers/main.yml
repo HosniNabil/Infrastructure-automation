@@ -1,2 +1,5 @@
 ---
 # handlers file for centos
+- name: Init terraform directory
+  shell: |
+    terraform init {{ terraform_dir }}
