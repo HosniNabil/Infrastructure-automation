@@ -2,8 +2,7 @@
   hosts: terraform
   become: true
   tasks:
-    - name: Register as user (joe_user) with password (somepass) and auto-subscribe to available content.
-      redhat_subscription:
+    - name: Register with Red Hat subscription manager
         state: present
         username: "{{ rhsm_user }}"
         password: "{{ rhsm_pw }}"
