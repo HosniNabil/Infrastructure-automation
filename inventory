@@ -1,19 +1,12 @@
 
-[terraform-rhel]
+[terraform]
 10.112.42.55
 
 [terraform:vars]
 ansible_user = nabil
 
-[openiam]
-10.112.42.56
-
-[openiam:vars]
-ansible_user = asma
-
 [hypervisor]
 10.112.42.52
-
 
 [hypervisor:vars]
 ansible_user = nabil
