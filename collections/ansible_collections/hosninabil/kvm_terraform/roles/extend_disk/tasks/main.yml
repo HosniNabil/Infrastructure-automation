@@ -8,5 +8,5 @@
   poll: 10
 - name: Extend vm root disk
   shell: |
-    qemu-img resize {{ pool_path }}/{{ vm_volume_name }}.qcow2 +{{ size }}
+    qemu-img resize {{ pool_path }}/{{ vm_hostname }}.qcow2 +{{ size }}
   notify: Start VM

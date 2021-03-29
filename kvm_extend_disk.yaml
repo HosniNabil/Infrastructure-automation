@@ -3,7 +3,4 @@
   become: true
   tasks:
     - include_role:
-        name: hosninabil.kvm_terraform.extend_disk
-      vars:
-        vm_hostname: 'http-server'
-        size: 2G
+        name: hosninabil.kvm_terraform.extend_disk        
