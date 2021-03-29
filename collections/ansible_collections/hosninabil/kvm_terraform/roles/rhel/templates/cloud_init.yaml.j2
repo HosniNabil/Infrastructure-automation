@@ -18,9 +18,5 @@ chpasswd:
     root:{{ vm_root_password }}
     {{ vm_user }}: {{ vm_root_password }}
   expire: false
-rh_subscription:
-  username: "{{ rhsm_username }}"
-  password: "{{ rhsm_pass }}"
-  auto-attach: True
   # add-pool: "{{ rhel_pool_id }}"
 final_message: "The system is finally up, after $UPTIME seconds"

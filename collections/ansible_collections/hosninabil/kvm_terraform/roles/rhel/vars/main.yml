@@ -9,9 +9,6 @@ rhel_7_path: /home/nabil/ISO/rhel-7.qcow2
 rhel_8_path: /home/nabil/ISO/rhel-8.qcow2
 vm_root_password: "P@ssw0rd"
 vm_user: nabil
-rhel_pool_id: '8a85f99976fc3632017748142ed90caf'
-rhsm_username: user@email
-rhsm_pass: 'password'
 vm_ip: 10.112.42.57/24
 vm_gw: 10.112.42.254
 vm_dns: 8.8.8.8
