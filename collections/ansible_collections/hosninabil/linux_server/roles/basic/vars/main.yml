@@ -1,5 +1,0 @@
----
-# vars file for basic-config
-hostname: linux-server.infra.otbs.local
-password: password
-user: asma

@@ -1,5 +1,5 @@
 ---
-# handlers file for basic-config
+# handlers file for post-install
 - name: Restart sshd
   service:
     name: sshd

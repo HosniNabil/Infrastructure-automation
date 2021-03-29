@@ -1,68 +1,44 @@
 ---
-# tasks file for basic-config
+# tasks file for post-install
 #hostname
 - hostname:
-    name: "{{ hostname }}"
-  tags: [hostname]
-- name: check if sudoers file exist # idempotence
-  stat:
-    path: /etc/sudoers.d/{{ user }}
-  register: sudo_file
-  tags: [sudo]
-- name: create sudoers file for user
-  file:
-    path: /etc/sudoers.d/{{ user }}
-    state: touch
-  tags: [sudo]
-  when: sudo_file.stat.exists == false
-- name: add sudo Configuration.   #sudo without password
-  lineinfile:
-    path: /etc/sudoers.d/{{ user }}
-    line: '{{ user }} ALL=(root) NOPASSWD:ALL'
-  tags: [sudo]
-- name: make sudoers file read only   #read only password
-  file:
-    path: /etc/sudoers.d/{{ user }}
-    mode: 440
-  tags: [sudo]
+    name: "{{ vm_hostname }}"
 #ssh
 - name: copy ssh config file
   copy:
-    src: files/sshd_config
+    src: sshd_conf
     dest: /etc/ssh/sshd_conf
     owner: root
     group: root
     mode: 0640
   notify: Restart sshd
-  tags: [ssh]
 - name: reset selinux context in selinux enabled systems
   file:
     path: /etc/ssh/sshd_conf
     seuser: system_u
     setype: etc_t
   when: ansible_os_family == "RedHat"
-  tags: [ssh]
 - name: update system
   package:
     name: '*'
     state: latest
   notify: rebooot host and wait to confirm
-  tags: [update]
-- name: install vnc server packages
+- name: Flush handlers
+  meta: flush_handlers
+- name: install vnc server needed packages
   package:
-    name: tigervnc-server
+    name: tigervnc-server, python3 ,python3-firewall, firewalld
     state: present
-  tags: [vnc]
 - name: Create the remote .vnc directory
   file:
     path: "/home/{{ user }}/.vnc"
     mode: 0755
     state: directory
-  tags: [vnc]
+    owner: "{{ user }}"
+    group: "{{ user }}"
 - name: Generate vnc password
   shell: |
       echo {{ password }} | vncpasswd -f > /home/{{ user }}/.vnc/passwd
-  tags: [vnc]
   become: false
 - name: Template vnc service file
   template:
@@ -72,11 +48,13 @@
     group: root
     mode: 0644
   notify: Start & enable the vncserver
-  tags: [vnc]
+- name : Ensure firewalld is started
+  service:
+    name: firewalld
+    state: started
 - name: Ensure vnc firewall port is open
   firewalld:
     port: 5901/tcp
     state: enabled
     permanent: true
     immediate: true
-  tags: [vnc]
