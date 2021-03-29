@@ -1,0 +1,15 @@
+- name : Post install
+  hosts: terraform
+  become: true
+  tasks:
+    - name: Register as user (joe_user) with password (somepass) and auto-subscribe to available content.
+      redhat_subscription:
+        state: present
+        username: "{{ rhsm_user }}"
+        password: "{{ rhsm_pw }}"
+        pool_ids: "{{ rhsm_pool }}"
+    - include_role:
+        name: hosninabil.linux_server.post_install
+      vars:
+        - user: nabil
+        - vm_hostname: test
