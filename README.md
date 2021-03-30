@@ -140,7 +140,5 @@ This playbook create a Centos VM on KVM host using terraform.
 ## **post-install**
   This playbook is the same as the post-install-rhel for non subscription systems (Such as Centos)
 # Collections
-## [kvm_terraform](collections/ansible_collections/kvm_terraform/README.md)
-Ansible collection for terraform/kvm related tasks
-## [linux_server](collections/ansible_collections/linux_server/README.md)
-Ansible collection for linux servers related tasks
+## [kvm_terraform](collections/ansible_collections/hosninabil/kvm_terraform/README.md)
+## [linux_server](collections/ansible_collections/hosninabil/linux_server/README.md)
