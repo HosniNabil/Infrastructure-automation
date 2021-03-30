@@ -2,8 +2,9 @@
 # tasks file for nfs
 - name: Install NFS required packages
   package:
-    name: nfs-utils, python3, python3-firewall, firewalld
+    name: nfs-utils
     state: present
+
 - name: Create shared directory
   file:
     path: "/{{ shared_dir }}"
