@@ -31,3 +31,4 @@ ansible-playbook -i inventory kvm_rhel.yaml
 - **vm_cpu** : number for vpcus
 - **vm_network** : network name in the hypervisor
 - **vm_authorized_ssh** : authorized public ssh id
+#Ansible collections
