@@ -1,21 +1,19 @@
 # Infrastructure-automation
  Automating daily infrastructure tasks with Ansible & terraform
 ## Table of contents
-1. Playbooks
-2. Ansible collections
+1. [Playbooks](#Playbooks)
+2. [Ansible collections](#Ansible collections)
 
-## Playbooks
-1. **kvm_centos8** : Create a VM using the Centos 8 generic cloud image on a kvm host using terraform
-2. **kvm_extend_disk** : Extend the VM's root disk by wanted size
-3. **kvm_add_disk** : Create and attach a disk to a KVM VM
-4. **terraform_cleanup** : Cleanup terraform deployment and delete added disks
-## Collections
- - **kvm_terraform**
-## kvm_terraform
-### Roles
-####    1. **centos**
-Ansible role to create a VM using the Centos 8 generic cloud image on a kvm host using terraform  
-#### Vars
+# Playbooks
+##**kvm_rhel**
+This playbook create a Red Hat enterprise linux VM on KVM host using terraform.
+It calls for the **rhel** role in the **kvm_terraform** collection.
+###Using the playbook
+**ansible-playbook**
+```
+ansible-playbook -i inventory kvm_rhel.yaml
+```
+###Variables
 - **golang_url** : url to download go from
 - **terraform_dir** : terraform working directory
 - **terraform_url** : url to download terraform terraform from
