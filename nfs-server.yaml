@@ -1,0 +1,8 @@
+- name: Setup an NFS server
+  hosts: hypervisor
+  become: true
+  tasks:
+    - include_role:
+        name: hosninabil.linux_server.nfs
+      vars:
+        - shared_dir: test
