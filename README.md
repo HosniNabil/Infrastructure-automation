@@ -2,7 +2,7 @@
  Automating daily infrastructure tasks with Ansible & terraform
 ## Table of contents
 1. [Playbooks](#Playbooks)
-2. ["Ansible collections"](#Ansible collections)
+2. [Collections](#Collections)
 
 # Playbooks
 ## **kvm_rhel**
@@ -28,4 +28,4 @@ ansible-playbook -i inventory kvm_rhel.yaml
   - **vm_gw** : Gateway for the default interface
   - **vm_dns** : DNS for the default interface
   - **vm_authorized_ssh** : ssh pubkey to be permitted in default user
-# Ansible collections
+# Collections
