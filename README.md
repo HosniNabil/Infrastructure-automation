@@ -5,7 +5,7 @@
 2. [Ansible collections](#Ansible collections)
 
 # Playbooks
-##**kvm_rhel**
+## **kvm_rhel**
 This playbook create a Red Hat enterprise linux VM on KVM host using terraform.
 It calls for the **rhel** role in the **kvm_terraform** collection.
 ###Using the playbook
