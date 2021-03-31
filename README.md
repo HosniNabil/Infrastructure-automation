@@ -98,40 +98,40 @@ This playbook create a Centos VM on KVM host using terraform.
 This playbook will destory a terraform deployment
 ### Using the playbook
 **ansible-playbook**
-      ```
-      ansible-playbook -i inventory terraform_cleanup.yaml
-      ```
+```
+ansible-playbook -i inventory terraform_cleanup.yaml
+```
 ### Variables
-- **terraform_dir**: terraform directory for the deployment to destory `terraform_dir: /home/nabil/terraform`
+- **terraform_dir**: terraform directory for the deployment to destory   `terraform_dir: /home/nabil/terraform`
 ## **kvm_extend_disk**
-    This playbook will extend the root disk of a specified KVM machine
+This playbook will extend the root disk of a specified KVM machine
 ### Using the playbook
-      **ansible-playbook**
-      ```
-      ansible-playbook -i inventory kvm_extend_disk.yaml
-      ```
+**ansible-playbook**
+```
+ansible-playbook -i inventory kvm_extend_disk.yaml
+```
 ### Variables
 - **vm_hostname**: name of the vm to extend its root disk `vm_hostname: ansible-terraform`
 - **size**: size of the extention `size: 10G`
 - **pool_path**: VM's storage pool path `pool_path: /var/lib/libvirt/images`
 ## **kvm_extend_disk**
-    This playbook will extend the root disk of a specified KVM machine
+This playbook will extend the root disk of a specified KVM machine
 ### Using the playbook
-      **ansible-playbook**
-      ```
-      ansible-playbook -i inventory kvm_extend_disk.yaml
-      ```
+**ansible-playbook**
+```
+ansible-playbook -i inventory kvm_extend_disk.yaml
+```
 ### Variables
 - **vm_hostname**: name of the vm to extend its root disk `vm_hostname: ansible-terraform`
 - **size**: size of the extention `size: 10G`
 - **pool_path**: VM's storage pool path `pool_path: /var/lib/libvirt/images`
 ## **post-install-rhel**
-    This playbook will subscribe the system to Red Hat subscription management, configure ssh server with no root access , plus no password access, update the system and setup a vnc server
+This playbook will subscribe the system to Red Hat subscription management, configure ssh server with no root access , plus no password access, update the system and setup a vnc server
 ### Using the playbook
-      **ansible-playbook**
-      ```
-      ansible-playbook -i inventory post-install-rhel.yaml
-      ```
+**ansible-playbook**
+```
+ansible-playbook -i inventory post-install-rhel.yaml
+```
 ### Variables
 - **rhsm_user**: Red Hat subscription username `rhsm_user: user@mail`
 - **rhsm_pw**: Red Hat subscription password `rhsm_pw: password`
@@ -139,7 +139,7 @@ This playbook will destory a terraform deployment
 - **user**: User for the vnc server `user: nabil`
 - **password**: vnc server password `password: P@ssw0rd`
 ## **post-install**
-  This playbook is the same as the post-install-rhel for non subscription systems (Such as Centos)
+This playbook is the same as the post-install-rhel for non subscription systems (Such as Centos)
 # Collections
 ## [kvm_terraform](collections/ansible_collections/hosninabil/kvm_terraform/README.md)
 ## [linux_server](collections/ansible_collections/hosninabil/linux_server/README.md)
