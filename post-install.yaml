@@ -4,6 +4,3 @@
   tasks:
     - include_role:
         name: hosninabil.linux_server.post_install
-      vars:
-        - user: nabil
-        - vm_hostname: test
