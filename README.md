@@ -114,17 +114,6 @@ ansible-playbook -i inventory kvm_extend_disk.yaml
 - **vm_hostname**: name of the vm to extend its root disk `vm_hostname: ansible-terraform`
 - **size**: size of the extention `size: 10G`
 - **pool_path**: VM's storage pool path `pool_path: /var/lib/libvirt/images`
-## **kvm_extend_disk**
-This playbook will extend the root disk of a specified KVM machine
-### Using the playbook
-**ansible-playbook**
-```
-ansible-playbook -i inventory kvm_extend_disk.yaml
-```
-### Variables
-- **vm_hostname**: name of the vm to extend its root disk `vm_hostname: ansible-terraform`
-- **size**: size of the extention `size: 10G`
-- **pool_path**: VM's storage pool path `pool_path: /var/lib/libvirt/images`
 ## **post-install-rhel**
 This playbook will subscribe the system to Red Hat subscription management, configure ssh server with no root access , plus no password access, update the system and setup a vnc server
 ### Using the playbook
