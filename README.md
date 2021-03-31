@@ -129,6 +129,16 @@ ansible-playbook -i inventory post-install-rhel.yaml
 - **password**: vnc server password `password: P@ssw0rd`
 ## **post-install**
 This playbook is the same as the post-install-rhel for non subscription systems (Such as Centos)
+## **nfs-server**
+This playbook will deploy an NFS server to the remote system.
+### Using the playbook
+**ansible-playbook**
+```
+ansible-playbook -i inventory nfs-server.yaml
+```
+### Variables
+- **shared_dir**: shared directory to be exposed `shared_dir: /nfsshare`
+- **permissions**: permissions provided to the shared directory `permissions: 0775`
 # Collections
 ## [kvm_terraform](collections/ansible_collections/hosninabil/kvm_terraform/README.md)
 ## [linux_server](collections/ansible_collections/hosninabil/linux_server/README.md)
