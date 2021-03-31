@@ -122,6 +122,7 @@ This playbook will subscribe the system to Red Hat subscription management, conf
 ansible-playbook -i inventory post-install-rhel.yaml
 ```
 ### Variables
+- **vm_hostname**: VM's FQDN `vm_hostname: machine.example.com`
 - **rhsm_user**: Red Hat subscription username `rhsm_user: user@mail`
 - **rhsm_pw**: Red Hat subscription password `rhsm_pw: password`
 - **rhsm_pool**: Red Hat subscription pool ID `rhsm_id: xxxxxxxxxx`
