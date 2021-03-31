@@ -92,11 +92,12 @@ This playbook create a Centos VM on KVM host using terraform.
     - **vm_ip** : IP/prefix for the default interface `vm_ip: 10.0.42.10/24`
     - **vm_gw** : Gateway for the default interface `vm_gw: 10.0.42.254`
     - **vm_dns** : DNS for the default interface `vm_dns: 8.8.8.8`
-    - **vm_authorized_ssh** : ssh pubkey to be permitted in default user `vm_authorized_ssh: ssh-rsa AAAAB.....`
+    - **vm_authorized_ssh** : ssh pubkey to be permitted in default user  `vm_authorized_ssh: ssh-rsa AAAAB.....`
+
 ## **terraform_cleanup**
-    This playbook will destory a terraform deployment
+This playbook will destory a terraform deployment
 ### Using the playbook
-      **ansible-playbook**
+**ansible-playbook**
       ```
       ansible-playbook -i inventory terraform_cleanup.yaml
       ```
