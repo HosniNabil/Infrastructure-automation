@@ -2,9 +2,14 @@
 # tasks file for nfs
 - name: Install NFS required packages
   package:
-    name: nfs-utils
+    name: nfs-utils, firewalld, python-firewall
     state: present
-
+  when: ansible_distribution_major_version is match('7')
+- name: Install NFS required packages
+  package:
+    name: nfs-utils, firewalld, python3-firewall
+    state: present
+  when: ansible_distribution_major_version is match('8')
 - name: Create shared directory
   file:
     path: "/{{ shared_dir }}"
@@ -27,6 +32,11 @@
     state: present
     line: "/{{ shared_dir }} *(rw,sync,no_root_squash)"
   notify: Restart and enable nfs
+- name: Ensure Firewalld is active
+  service:
+    name: firewalld
+    state: started
+    enabled: true
 - name: Allow NFS in firewalld
   firewalld:
     service: "{{ item }}"
