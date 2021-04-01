@@ -1,0 +1,31 @@
+---
+# tasks file for terraform
+- name: Ensure Essentials are installed
+  package:
+    name: wget,git,make,libvirt-devel,libvirt-gobject
+    state: present
+- name: Ensure Golang is installed
+  unarchive:
+    src: "{{ golang_url }}"
+    dest: /usr/local
+    remote_src: true
+- name : Ensure golang dir added to profile
+  lineinfile:
+    path: /etc/profile
+    line: export PATH=$PATH:/usr/local/go/bin
+- name: Download and unarchive terraform tarball
+  unarchive:
+    src: "{{ terraform_url }}"
+    dest: /usr/bin
+    remote_src: true
+- name: Create plugins directory
+  file:
+    path: "~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64"
+    state: directory
+    mode: 0755
+- name: Clone provider plugin source
+  git:
+    repo: "{{ terraform_libvirt_provider_git }}"
+    dest: "terraform-provider-libvirt"
+    force: true
+  notify: Build provider plugin from source

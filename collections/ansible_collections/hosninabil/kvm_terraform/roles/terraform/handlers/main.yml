@@ -1,0 +1,13 @@
+---
+# handlers file for terraform
+- name: Build provider plugin from source
+  make:
+    chdir: "terraform-provider-libvirt/"
+  environment:
+    PATH: /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/go/bin:/root/bin
+  notify: Move provider plugin to plugin dir
+- name: Move provider plugin to plugin dir
+  copy:
+    src: "terraform-provider-libvirt/terraform-provider-libvirt"
+    dest: "~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64/terraform-provider-libvirt"
+    remote_src: true

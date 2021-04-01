@@ -1,9 +1,6 @@
 ---
 # vars file for rhel
-golang_url: https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
-terraform_url: https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip
 terraform_dir: /root/rhel
-terraform_libvirt_provider_git: https://github.com/dmacvicar/terraform-provider-libvirt.git
 rhel_version: '7'
 rhel_7_path: /home/nabil/ISO/rhel-7.qcow2
 rhel_8_path: /home/nabil/ISO/rhel-8.qcow2
