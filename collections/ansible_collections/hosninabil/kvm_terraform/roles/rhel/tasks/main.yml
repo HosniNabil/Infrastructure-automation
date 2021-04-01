@@ -3,11 +3,11 @@
 #set variables
 - name: Set variables for RHEL 7
   set_fact:
-      vm_image_path: "{{ rhel_7_path }}"
+    vm_image_path: "{{ rhel_7_path }}"
   when: rhel_version == '7'
 - name: Set variables for RHEL 8
   set_fact:
-      vm_image_path: "{{ rhel_8_path }}"
+    vm_image_path: "{{ rhel_8_path }}"
   when: rhel_version == '8'
 - name: Create terraform deployment directory
   file:
@@ -42,4 +42,3 @@
   terraform:
     project_path: "{{ terraform_dir }}"
     state: present
-    # plan_file: "{{ terraform_dir }}/tfplan"
