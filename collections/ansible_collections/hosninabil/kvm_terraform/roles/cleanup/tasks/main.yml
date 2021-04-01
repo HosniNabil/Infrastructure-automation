@@ -4,6 +4,7 @@
   terraform:
     project_path: "{{ terraform_dir }}"
     state: absent
+    purge_workspace: True
 - name: Ensure added disk are deleted
   file:
     path: "{{ pool_path }}/{{ disk_name }}.qcow2"
