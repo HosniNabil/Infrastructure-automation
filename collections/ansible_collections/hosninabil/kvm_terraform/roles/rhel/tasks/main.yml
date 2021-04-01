@@ -14,7 +14,6 @@
     path: "{{ terraform_dir }}"
     state: directory
     mode: '0755'
-  notify: Init terraform directory
 - name: Create terraform deployment config directory
   file:
     path: "{{ terraform_dir }}/config"
@@ -28,8 +27,9 @@
   with_items:
     - main.tf
     - providers.tf
-- name: Flush handlers
-  meta: flush_handlers
+- name: Init terraform directory
+  shell: |
+    terraform init /root/{{ terraform_dir }}
 - name: Template variable and cloud-init files
   template:
     src: "{{ item.src }}"
@@ -38,7 +38,15 @@
     - { src: variables.tf.j2, dest: '{{ terraform_dir }}/variables.tf' }
     - { src: cloud_init.yaml.j2, dest: '{{ terraform_dir }}/config/cloud_init.yaml' }
     - { src: network_config_static.yaml.j2, dest: '{{ terraform_dir }}/config/network-config' }
+- name: Clean up old deployments artifacts
+  file:
+    path: "/var/lib/libvirt/images/{{ item }}"
+    state: absent
+  with_items:
+    - commoninit.iso
+    - "{{ vm_hostname }}.qcow2"
 - name: Deploy terraform workload
   terraform:
     project_path: "{{ terraform_dir }}"
     state: present
+  become: true

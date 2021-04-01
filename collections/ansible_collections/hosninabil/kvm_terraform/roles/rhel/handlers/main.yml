@@ -1,5 +1,2 @@
 ---
 # handlers file for rhel
-- name: Init terraform directory
-  shell: |
-    terraform init {{ terraform_dir }}

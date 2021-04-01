@@ -11,3 +11,4 @@
     src: "terraform-provider-libvirt/terraform-provider-libvirt"
     dest: "/root/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64/terraform-provider-libvirt"
     remote_src: true
+    mode: u+x
