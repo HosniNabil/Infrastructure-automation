@@ -2,7 +2,7 @@
 # tasks file for cleanup
 - name: cleanup terraform deployment
   terraform:
-    project_path: "{{ terraform_dir }}"
+    project_path: "/root/{{ vm_hostname }}"
     state: absent
     purge_workspace: True
 - name: Ensure added disk are deleted
