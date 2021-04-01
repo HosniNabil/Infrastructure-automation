@@ -11,33 +11,30 @@
   when: rhel_version == '8'
 - name: Create terraform deployment directory
   file:
-    path: "{{ terraform_dir }}"
+    path: "/root/{{ vm_hostname }}"
     state: directory
     mode: '0755'
 - name: Create terraform deployment config directory
   file:
-    path: "{{ terraform_dir }}/config"
+    path: "/root/{{ vm_hostname }}/config"
     state: directory
     mode: '0755'
 #copy terraform provider file
 - name: Copy tf files
   copy:
     src: "{{ item }}"
-    dest: "{{terraform_dir}}/{{ item }}"
+    dest: "/root/{{ vm_hostname }}/{{ item }}"
   with_items:
     - main.tf
     - providers.tf
-- name: Init terraform directory
-  shell: |
-    terraform init /root/{{ terraform_dir }}
 - name: Template variable and cloud-init files
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { src: variables.tf.j2, dest: '{{ terraform_dir }}/variables.tf' }
-    - { src: cloud_init.yaml.j2, dest: '{{ terraform_dir }}/config/cloud_init.yaml' }
-    - { src: network_config_static.yaml.j2, dest: '{{ terraform_dir }}/config/network-config' }
+    - { src: variables.tf.j2, dest: '/root/{{ vm_hostname }}/variables.tf' }
+    - { src: cloud_init.yaml.j2, dest: '/root/{{ vm_hostname }}/config/cloud_init.yaml' }
+    - { src: network_config_static.yaml.j2, dest: '/root/{{ vm_hostname }}/config/network-config' }
 - name: Clean up old deployments artifacts
   file:
     path: "/var/lib/libvirt/images/{{ item }}"
@@ -47,6 +44,6 @@
     - "{{ vm_hostname }}.qcow2"
 - name: Deploy terraform workload
   terraform:
-    project_path: "{{ terraform_dir }}"
+    project_path: "/root/{{ vm_hostname }}"
     state: present
   become: true

@@ -1,17 +1,6 @@
-- name : create a centos 8 vm on remote kvm host
+- name : create a RHEL vm on remote kvm host
   hosts: hypervisor
   become: true
   tasks:
     - include_role:
         name: hosninabil.kvm_terraform.rhel
-      vars:
-        rhel_version: '8'
-        terraform_dir: /root/nfs
-        vm_cpu: 1
-        vm_dns: 8.8.8.8
-        vm_gw: 10.112.42.254
-        vm_hostname: nfs-server
-        vm_ip: 10.112.42.55/24
-        vm_memory: 2048
-        vm_network: vlan42
-        vm_user: nabil

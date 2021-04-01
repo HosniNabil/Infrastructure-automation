@@ -23,6 +23,7 @@
     path: "/root/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64"
     state: directory
     mode: 0755
+  notify: Build provider plugin from source
 - name: Clone provider plugin source
   git:
     repo: "{{ terraform_libvirt_provider_git }}"

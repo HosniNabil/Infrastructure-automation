@@ -1,6 +1,5 @@
 ---
 # vars file for rhel
-terraform_dir: /root/rhel
 rhel_version: '7'
 rhel_7_path: /home/nabil/ISO/rhel-7.qcow2
 rhel_8_path: /home/nabil/ISO/rhel-8.qcow2
