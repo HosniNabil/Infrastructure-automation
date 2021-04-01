@@ -1,2 +1,14 @@
 ---
 # vars file for haproxy
+lb_name: lb-test
+lb_ip: 10.112.42.55
+lb_port: 80
+lb_mode: http
+lb_balance: roundrobin
+lb_server_list:
+  - dn: tower1
+    ip: 10.112.42.62
+    port: 443
+  - dn: tower2
+    ip: 10.112.42.63
+    port: 443
