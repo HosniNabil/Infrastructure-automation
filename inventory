@@ -2,6 +2,9 @@
 [terraform]
 10.112.42.55
 
+[nfs]
+10.112.42.55
+
 [terraform:vars]
 ansible_user = nabil
 
