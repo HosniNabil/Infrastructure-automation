@@ -29,6 +29,12 @@
   package:
     name: tigervnc-server, python3 ,python3-firewall, firewalld
     state: present
+  when: ansible_distribution_major_version is match('8')
+- name: install vnc server needed packages
+  package:
+    name: tigervnc-server, python ,python-firewall, firewalld
+    state: present
+  when: ansible_distribution_major_version is match('7')
 - name: Create the remote .vnc directory
   file:
     path: "/home/{{ user }}/.vnc"
