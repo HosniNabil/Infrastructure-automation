@@ -1,0 +1,67 @@
+---
+# tasks file for mariadb
+- name: Ensure needed packages are installed
+  dnf:
+    name:  python3-firewall, firewalld, python3-PyMySQL, mariadb-server
+    state: present
+  when: ansible_distribution_major_version is match('8')
+- name: Ensure needed packages are installed
+  yum:
+    name: mariadb-server , python-firewall, firewalld, python2-PyMySQL
+    state: present
+  when: ansible_distribution_major_version is match('7')
+- name: Ensure service is started and enabled
+  service:
+    name: mariadb
+    state: started
+    enabled: true
+- name: Setup mariadb root password
+  mysql_user:
+    login_user: root
+    login_password: "{{ current_root_password }}"
+    name: root
+    password: "{{ root_password }}"
+    host_all: true
+  notify: Restart mariadb
+- name: Delete anonymous server user
+  mysql_user:
+    login_user: root
+    login_password: "{{ root_password }}"
+    user: ""
+    host_all: true
+    state: absent
+  notify: Restart mariadb
+- name: Delete test database
+  mysql_db:
+    login_user: root
+    login_password: "{{ root_password }}"
+    db: test
+    state: absent
+  notify: Restart mariadb
+- name: Ensure Firewalld is active
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+- name: Add mariadb service in firewalld
+  firewalld:
+    service: mysql
+    state: enabled
+    permanent: true
+    immediate: true
+- name: Flush all handlers
+  meta: flush_handlers
+- name: Create database
+  mysql_db:
+    name: "{{ sql_db }}"
+    state: present
+    login_user: root
+    login_password: "{{ root_password }}"
+- name: Create user with all database privileges
+  mysql_user:
+    name: "{{ sql_user }}"
+    password: "{{ sql_password }}"
+    state: present
+    priv: '*.*:ALL'
+    login_user: root
+    login_password: "{{ root_password }}"
