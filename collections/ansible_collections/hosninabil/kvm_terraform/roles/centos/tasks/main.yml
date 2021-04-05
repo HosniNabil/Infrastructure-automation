@@ -1,71 +1,35 @@
 ---
 # tasks file for kvm_machine
-#validate host
-#INSTALL GO
-#install terraform
-- name: Ensure Essentials are installed
-  package:
-    name: wget,git,make,libvirt-devel,libvirt-gobject
-    state: present
-- name: Ensure Golang is installed
-  unarchive:
-    src: "{{ golang_url }}"
-    dest: /usr/local
-    remote_src: true
-## add path to go version
-- name : Ensure golang dir added to profile
-  lineinfile:
-    path: /etc/profile
-    line: export PATH=$PATH:/usr/local/go/bin
-- name: Download and unarchive terraform tarball
-  unarchive:
-    src: "{{ terraform_url }}"
-    dest: /usr/bin
-    remote_src: true
-#create terraform deployment directory
+- name: Set variables for Centos 7
+  set_fact:
+    vm_image_url: "{{ centos_7_url }}"
+  when: centos_version == '7'
+- name: Set variables for Centos 8
+  set_fact:
+    vm_image_url: "{{ centos_8_url }}"
+  when: centos_version == '8'
 - name: Create terraform deployment directory
   file:
-    path: "{{ terraform_dir }}"
+    path: "/root/{{ vm_hostname }}"
     state: directory
     mode: '0755'
-  notify: Init terraform directory
+  #notify: Init terraform directory
 - name: Create terraform deployment config directory
   file:
-    path: "{{ terraform_dir }}/config"
+    path: "/root/{{ vm_hostname }}/config"
     state: directory
     mode: '0755'
-#create plugin dir in terraform dir
-- name: Create plugins directory
-  file:
-    path: "~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64"
-    state: directory
-    mode: 0755
-- name: Clone provider plugin source
-  git:
-    repo: "{{ terraform_libvirt_provider_git }}"
-    dest: "{{ terraform_dir }}/terraform-provider-libvirt"
-    force: true
-- name: Build provider plugin from source
-  make:
-    chdir: "{{ terraform_dir }}/terraform-provider-libvirt/"
-  environment:
-    PATH: /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/go/bin:/root/bin
-- name: Move provider plugin to plugin dir
-  copy:
-    src: "{{ terraform_dir }}/terraform-provider-libvirt/terraform-provider-libvirt"
-    dest: "~/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64/terraform-provider-libvirt"
-    remote_src: true
 #download generic cloud image
 - name: Download generic cloud image
   get_url:
-    url: "{{ vm_genericcloud_image_url }}"
-    dest: "{{ terraform_dir }}/generic_cloud_{{ vm_image_name }}.qcow2"
+    url: "{{ vm_image_url }}"
+    dest: "/root/{{ vm_hostname }}/centos_{{ centos_version }}.qcow2"
 # deployment configuration
 #copy terraform provider file
 - name: Copy tf files
   copy:
     src: "{{ item }}"
-    dest: "{{terraform_dir}}/{{ item }}"
+    dest: "/root/{{ vm_hostname }}/{{ item }}"
   with_items:
     - main.tf
     - providers.tf
@@ -76,11 +40,10 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { src: variables.tf.j2, dest: '{{ terraform_dir }}/variables.tf' }
-    - { src: cloud_init.yaml.j2, dest: '{{ terraform_dir }}/config/cloud_init.yaml' }
-    - { src: network_config_static.yaml.j2, dest: '{{ terraform_dir }}/config/network-config' }
+    - { src: variables.tf.j2, dest: '/root/{{ vm_hostname }}/variables.tf' }
+    - { src: cloud_init.yaml.j2, dest: '/root/{{ vm_hostname }}/config/cloud_init.yaml' }
+    - { src: network_config_static.yaml.j2, dest: '{{ vm_hostname }}/config/network-config' }
 - name: Deploy terraform workload
   terraform:
-    project_path: "{{ terraform_dir }}"
+    project_path: "/root/{{ vm_hostname }}"
     state: present
-    # plan_file: "{{ terraform_dir }}/tfplan"

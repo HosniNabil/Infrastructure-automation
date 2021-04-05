@@ -4,7 +4,7 @@ variable "vm_volume" {
 }
 variable "image_path" {
   description = "terraform image path"
-  default     = "{{ terraform_dir }}/generic_cloud_{{ vm_image_name }}.qcow2"
+  default     = "/root/{{ vm_hostname }}/centos_{{ centos_version }}.qcow2"
 }
 
 variable "vm_hostname" {
