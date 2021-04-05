@@ -47,3 +47,4 @@
   terraform:
     project_path: "/root/{{ vm_hostname }}"
     state: present
+    force_init: true
