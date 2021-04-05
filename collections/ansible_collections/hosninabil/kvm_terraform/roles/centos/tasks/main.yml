@@ -42,7 +42,7 @@
   with_items:
     - { src: variables.tf.j2, dest: '/root/{{ vm_hostname }}/variables.tf' }
     - { src: cloud_init.yaml.j2, dest: '/root/{{ vm_hostname }}/config/cloud_init.yaml' }
-    - { src: network_config_static.yaml.j2, dest: '{{ vm_hostname }}/config/network-config' }
+    - { src: network_config_static.yaml.j2, dest: '/root/{{ vm_hostname }}/config/network-config' }
 - name: Deploy terraform workload
   terraform:
     project_path: "/root/{{ vm_hostname }}"
