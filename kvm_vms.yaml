@@ -1,0 +1,15 @@
+- name: List all Vms in kvm remote host
+  hosts: hypervisor
+  become: true
+  tasks:
+    - name: Ensure needed packages are installed
+      package:
+        name: libvirt-python
+        state: present
+    - name: Get running VMs list
+      virt:
+        command: list_vms
+      register: vms_list
+    - name: List all VMs
+      debug:
+        msg: "{{ vms_list }}"
