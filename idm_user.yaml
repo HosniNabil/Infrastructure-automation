@@ -5,7 +5,7 @@
     - name: Create user
       freeipa.ansible_freeipa.ipauser:
         ipaadmin_password: "{{ idm_password }}"
-        name: "{{ name }}"
+        name: "{{ username }}"
         first: "{{ first_name }}"
         last: "{{ last_name }}"
         password: "{{ password }}"
