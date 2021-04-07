@@ -16,3 +16,6 @@ ansible_user = nabil
 
 [hypervisor:vars]
 ansible_user = nabil
+
+[ipaserver]
+10.112.42.60

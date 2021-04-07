@@ -1,0 +1,12 @@
+- name: Add users to IDM
+  hosts: ipaserver
+  become: true
+  tasks:
+    - name: Create user
+      ipauser:
+        ipaadmin_password: "{{ idm_password }}"
+        name: "{{ name }}"
+        first: "{{ first_name }}"
+        last: "{{ last_name }}"
+        password: "{{ password }}"
+        update_password: on_create
