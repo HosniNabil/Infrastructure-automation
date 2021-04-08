@@ -1,4 +1,4 @@
-- name: Add users to IDM
+- name: Add Users to IDM
   hosts: ipaserver
   become: true
   tasks:
