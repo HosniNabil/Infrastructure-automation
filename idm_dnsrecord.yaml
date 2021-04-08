@@ -1,4 +1,4 @@
-- name: Add users to IDM
+- name: Add DNS record to idm
   hosts: ipaserver
   become: true
   tasks:
@@ -6,7 +6,7 @@
       freeipa.ansible_freeipa.ipadnsrecord:
         ipaadmin_password: "{{ idm_password }}"
         name: "{{ record_hostname }}"
-        zone: "{{ record_zone }}"
+        zone_name: "{{ record_zone }}"
         ip_address: "{{ record_ip }}"
         create_reverse: true
         state: present
