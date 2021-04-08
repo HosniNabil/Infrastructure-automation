@@ -7,6 +7,6 @@
         ipaadmin_password: "{{ idm_password }}"
         name: "{{ record_hostname }}"
         zone_name:  {{ record_zone }}
-        ip_address: "{{ record_ip }}"
-        create_reverse: yes
+        record_type: 'A'
+        record_value: "{{ record_ip }}"
         state: present
