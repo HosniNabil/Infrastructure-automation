@@ -7,7 +7,7 @@
         ipaadmin_password: "{{ idm_password }}"
         name: "{{ record_hostname }}"
         zone_name:  infra.otbs.local
-        a_rec:
-          - "{{ record_ip }}"
+        record_type: 'A'
+        record_value: "{{ record_ip }}"
         create_reverse: yes
         state: present
