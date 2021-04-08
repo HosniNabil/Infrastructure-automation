@@ -8,6 +8,6 @@
         name: "{{ record_hostname }}"
         zone_name:  infra.otbs.local
         record_type: 'A'
-        record_value: '"{{ record_ip }}"'
+        record_value: "{{ record_ip }}"
         create_reverse: yes
         state: present
