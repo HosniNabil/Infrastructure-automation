@@ -1,0 +1,20 @@
+- name: Add users to IDM
+  hosts: ipaserver
+  become: true
+  tasks:
+    - name: Ensure dns forward zone is created
+      freeipa.ansible_freeipa.ipadnszone:
+        ipaadmin_password: "{{ idm_password }}"
+        name: "{{ zone }}"
+        allow_sync_ptr: true
+        dynamic_update: true
+        forwarders:
+          - ip_address: 8.8.8.8
+          - ip_address: 8.8.4.4
+        state: present
+    - name: Ensure dns reverse zone is created
+      freeipa.ansible_freeipa.ipadnszone:
+        ipaadmin_password: "{{ idm_password }}"
+        name_from_ip: "{{ revzone }}"
+        state: present
+      register: result
