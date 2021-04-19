@@ -1,0 +1,52 @@
+---
+# tasks file for terraform_setup
+- name: Ensure needed packages are installed for RedHat distros
+  yum:
+    name: git,wget,make,unzip
+    state: present
+  when: ansible_facts['os_family'] == "RedHat"
+- name: Ensure needed packages are installed
+  package:
+    name: git,wget,make,python3,python3-apt
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+- name: Ensure Golang is installed
+  unarchive:
+    src: "{{ golang_url }}"
+    dest: /usr/local
+    remote_src: true
+- name: Ensure Golang is added to PATH
+  lineinfile:
+    path: /etc/profile
+    line: export PATH=$PATH:/usr/local/go/bin
+- name: Ensure Hashicorp APT key is present for Debian distros
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+- name: Ensure Hashicorp repo is present for Debian distros
+  apt_repository:
+    repo: deb amd64 https://apt.releases.hashicorp.com groovy main"
+    state: present
+  when: ansible_distribution == "20.10"
+- name: Ensure Hashicorp repo is present for Debian distros
+  apt_repository:
+    repo: deb amd64 https://apt.releases.hashicorp.com focal main"
+    state: present
+  when: ansible_distribution == "20.04"
+- name: Ensure Hashicorp repo is present for Debian distros
+  apt_repository:
+    repo: deb amd64 https://apt.releases.hashicorp.com bionic main"
+    state: present
+  when: ansible_distribution == "18.04"
+- name: Ensure terraform is installed in Debian distros
+  apt:
+    name: terraform
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+- name: Ensure terraform is installed in RedHat distros
+  unarchive:
+    src: "{{ terraform_url }}"
+    dest: /usr/bin
+    remote_src: true
+  when: ansible_facts['os_family'] == "RedHat"

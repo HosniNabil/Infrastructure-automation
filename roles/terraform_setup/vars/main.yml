@@ -1,0 +1,4 @@
+---
+# vars file for terraform_setup
+golang_url: https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
+terraform_url: https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip
