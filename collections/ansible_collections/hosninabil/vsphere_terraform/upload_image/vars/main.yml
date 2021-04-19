@@ -1,0 +1,6 @@
+---
+# vars file for upload_image
+rhel_7_path: /home/nabil/ISO/rhel-7.qcow2
+rhel_8_path: /home/nabil/ISO/rhel-8.qcow2
+centos_7_path: /home/nabil/ISO/centos-7.qcow2
+centos_8_path: /home/nabil/ISO/centos-8.qcow2
