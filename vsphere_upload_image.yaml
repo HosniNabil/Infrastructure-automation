@@ -1,0 +1,15 @@
+- name: Upload image iso in vpshere
+  hosts: hypervisor
+  become: true
+  tasks:
+    - include_role:
+        name: hosninabil.vsphere_terraform.upload_image
+      vars:
+        os_dist: "centos"
+        os_version: '7'
+        image_name: centos7
+        vpshere_username: administrator@vsphere.local
+        vpshere_password: Fg2020**
+        vsphere_server: 10.112.42.12
+        vsphere_dc: datacenter
+        vsphere_datastore: datastore1
