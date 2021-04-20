@@ -1,5 +1,9 @@
 ---
 # tasks file for terraform_libvirt_provider
+- name: Ensure Essentials are installed
+  package:
+    name: wget,git,make,libvirt-devel,libvirt-gobject
+    state: present
 - name: Create plugins directory
   file:
     path: "/root/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/0.6.3/linux_amd64"
