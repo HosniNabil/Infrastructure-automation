@@ -1,5 +1,5 @@
 - name: Install terraform on remote host
-  hosts: terraformhost
+  hosts: terraform_host
   become: true
   tasks:
     - include_role:
