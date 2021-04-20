@@ -1,0 +1,3 @@
+---
+# vars file for terraform_libvirt_provider
+terraform_libvirt_provider_git: https://github.com/dmacvicar/terraform-provider-libvirt.git
