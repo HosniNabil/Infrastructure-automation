@@ -1,0 +1,28 @@
+variable "vm_volume" {
+  description = "terraform volume name"
+  default     = "{{ vm_hostname }}.qcow2"
+}
+variable "image_path" {
+  description = "terraform image path"
+  default     = "{{ vm_image_path }}"
+}
+
+variable "vm_hostname" {
+  description = "vm hostname"
+  default     = "{{ vm_hostname }}"
+}
+
+variable "vm_memory" {
+  description = "vm memory"
+  default     = {{ vm_memory }}
+}
+
+variable "vm_cpu" {
+  description = "vm cpu"
+  default     = {{ vm_cpu }}
+}
+
+variable "vm_network" {
+  description = "vm network"
+  default     = "{{ vm_network }}"
+}

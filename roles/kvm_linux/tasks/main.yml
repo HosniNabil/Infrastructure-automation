@@ -1,0 +1,65 @@
+---
+# tasks file for kvm_linux
+- name: Set variables for RHEL 7
+  set_fact:
+    vm_image_path: "{{ rhel_7_path }}"
+  when: dist == "rhel" and version == '7'
+- name: Set variables for RHEL 8
+  set_fact:
+    vm_image_path: "{{ rhel_8_path }}"
+  when: dist == "rhel" and version == '8'
+- name: Set variables for Centos 7
+  set_fact:
+    vm_image_url: "{{ centos_7_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.qcow2"
+  when: dist == "centos" and version == '7'
+- name: Set variables for Centos 8
+  set_fact:
+    vm_image_url: "{{ centos_8_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.qcow2"
+  when: dist == "centos" and version == '8'
+- name: Set variables for Ubuntu 18.04
+  set_fact:
+    vm_image_url: "{{ ubuntu_18_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.img"
+  when: dist == "ubuntu" and version == '18'
+- name: Set variables for Ubuntu 20.04
+  set_fact:
+    vm_image_url: "{{ ubuntu_20_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.img"
+  when: dist == "ubuntu" and version == '20'
+- name: Create terraform deployment directory
+  file:
+    path: "/root/{{ vm_hostname }}/config"
+    state: directory
+    mode: '0755'
+- name: Download Ubuntu generic cloud image if needed
+  get_url:
+    url: "{{ vm_image_url }}"
+    dest: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.img"
+  when: dist == "ubuntu"
+- name: Download Centos generic cloud image if needed
+  get_url:
+    url: "{{ vm_image_url }}"
+    dest: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.qcow2"
+  when: dist == "centos"
+- name: Copy tf files
+  copy:
+    src: "{{ item }}"
+    dest: "/root/{{ vm_hostname }}/{{ item }}"
+  with_items:
+    - main.tf
+    - providers.tf
+- name: Template variable and cloud-init files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: variables.tf.j2, dest: '/root/{{ vm_hostname }}/variables.tf' }
+    - { src: cloud_init.yaml.j2, dest: '/root/{{ vm_hostname }}/config/cloud_init.yaml' }
+    - { src: network_config_static.yaml.j2, dest: '/root/{{ vm_hostname }}/config/network-config' }
+- name: Deploy terraform workload
+  terraform:
+    project_path: "/root/{{ vm_hostname }}"
+    state: present
+    force_init: true
