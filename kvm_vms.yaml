@@ -1,5 +1,5 @@
 - name: List all Vms in kvm remote host
-  hosts: hypervisor
+  hosts: kvm_host
   become: true
   tasks:
     - name: Ensure needed packages are installed
