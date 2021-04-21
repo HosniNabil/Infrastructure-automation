@@ -1,6 +1,9 @@
 - name : create a centos 8 vm on remote kvm host
-  hosts: hypervisor
+  hosts: kvm_host
   become: true
   tasks:
     - include_role:
-        name: hosninabil.kvm_terraform.extend_disk        
+        name: kvm_extend_disk
+      vars:
+        size: 5G
+        vm_hostname: rhel8

@@ -1,0 +1,12 @@
+---
+# tasks file for kvm_extend_disk
+- name: Shutdown vm
+  virt:
+    name: "{{ vm_hostname }}"
+    command: shutdown
+  async: 180
+  poll: 10
+- name: Extend vm root disk
+  shell: |
+    qemu-img resize {{ pool_path }}/{{ vm_hostname }}.qcow2 +{{ size }}
+  notify: Start VM

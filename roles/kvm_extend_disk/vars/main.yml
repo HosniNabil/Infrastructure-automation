@@ -1,0 +1,3 @@
+---
+# vars file for kvm_extend_disk
+pool_path: /var/lib/libvirt/images
