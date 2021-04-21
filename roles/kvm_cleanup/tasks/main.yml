@@ -1,0 +1,8 @@
+---
+# tasks file for kvm_cleanup
+- name: cleanup terraform deployment
+  terraform:
+    project_path: "/root/{{ vm_hostname }}"
+    state: absent
+    purge_workspace: True
+## delete disks

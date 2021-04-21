@@ -1,6 +1,6 @@
 - name: Clean up terraform deployment
-  hosts: hypervisor
+  hosts: kvm_host
   become: true
   tasks:
     - include_role:
-        name: hosninabil.kvm_terraform.cleanup
+        name: kvm_cleanup
