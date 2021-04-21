@@ -1,0 +1,32 @@
+hostname: {{ vm_hostname }}
+write_files:
+- path: /etc/netplan/50-cloud-init.yaml
+  content: |
+    network:
+     version: 2
+     ethernets:
+      ens3:
+       addresses: [{{ vm_ip }}]
+       gateway4: {{ vm_gw }}
+       dhcp4: false
+       nameservers:
+         addresses:
+           - {{ vm_dns }}
+runcmd:
+- netplan --debug apply
+disable_root: false
+ssh_pwauth: false
+groups:
+  - ubuntu: [root,sys]
+  - cloud-users
+users:
+  - name: {{ vm_user }}
+    lock_passwd: false
+    groups: sudo, users, admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - {{ vm_authorized_ssh }}
+chpasswd:
+  list: |
+    root:{{ vm_root_password }}
+    {{ vm_user }}:{{vm_root_password }}

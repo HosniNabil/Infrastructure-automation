@@ -6,6 +6,7 @@ resource "libvirt_volume" "vm-qcow2" {
   name = var.vm_volume
   pool = "default"
   source = var.image_path
+  format = "qcow2"
 }
 
 data "template_file" "user_data" {
@@ -16,9 +17,9 @@ data "template_file" "network_config" {
 }
 
 resource "libvirt_cloudinit_disk" "commoninit" {
-  name           = "commoninit.iso"
+  name           = "commoninit-{{ vm_hostname }}.iso"
   user_data      = data.template_file.user_data.rendered
-  network_config = data.template_file.network_config.rendered
+#  network_config = data.template_file.network_config.rendered
   pool           = "default"
 }
 

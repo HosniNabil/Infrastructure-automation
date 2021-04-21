@@ -16,6 +16,6 @@ users:
 chpasswd:
   list: |
     root:{{ vm_root_password }}
-    {{ vm_user }}: {{ vm_root_password }}
+    {{ vm_user }}:{{ vm_root_password }}
   expire: false
 final_message: "The system is finally up, after $UPTIME seconds"

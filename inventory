@@ -1,20 +1,11 @@
 
-[terraform]
+[terraform_host]
 10.112.42.55
-
-[haproxy]
-10.112.42.55
-
-[nfs]
-10.112.42.55
-
-[terraform:vars]
+[terraform_host:vars]
 ansible_user = nabil
-
-[hypervisor]
+[kvm_host]
 10.112.42.52
-
-[hypervisor:vars]
+[kvm_host:vars]
 ansible_user = nabil
 
 [ipaserver]
