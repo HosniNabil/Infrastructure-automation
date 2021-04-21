@@ -4,6 +4,3 @@
   tasks:
     - include_role:
         name: kvm_extend_disk
-      vars:
-        size: 5G
-        vm_hostname: rhel8
