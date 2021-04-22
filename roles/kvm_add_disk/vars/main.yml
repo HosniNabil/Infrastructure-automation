@@ -1,0 +1,3 @@
+---
+# vars file for kvm_add_disk
+pool_path: /var/lib/libvirt/images

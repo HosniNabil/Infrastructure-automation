@@ -1,0 +1,15 @@
+---
+# tasks file for kvm_add_disk
+- name: Create new qcow2 disk
+  shell: |
+    qemu-img create -f qcow2 -o preallocation=full {{ pool_path }}/{{ vm_hostname }}-{{ vm_disk }}.qcow2 {{ disk_size }}
+- name: Fix ownership/group membership
+  file:
+    path: "{{ pool_path }}/{{ vm_hostname }}-{{ vm_disk }}.qcow2"
+    owner: qemu
+    group: qemu
+#make sure domain is running
+- name: attach disk to vm
+  shell: |
+    virsh attach-disk --domain rhel8   --target vdb --live --persistent --source /var/lib/libvirt/images/rhel8-vdb.qcow2
+#    virsh attach-disk --domain {{ vm_hostname }}   --target {{ vm_disk }} --live --persistent --source {{ pool_path }}/{{ vm_hostname }}-{{ vm_disk }}.qcow2

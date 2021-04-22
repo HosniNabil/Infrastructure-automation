@@ -1,12 +1,6 @@
-- name : create a centos 8 vm on remote kvm host
-  hosts: hypervisor
+- name : Add a qcow2 disk to an existant VM
+  hosts: kvm_host
   become: true
   tasks:
     - include_role:
-        name: hosninabil.kvm_terraform.add_disk
-      vars:
-        vm_hostname: 'http-server'
-        disk_name: centos8_2
-        disk_size: 10G
-        pool_path: /var/lib/libvirt/images
-        vm_disk_target: vdb
+        name: kvm_add_disk
