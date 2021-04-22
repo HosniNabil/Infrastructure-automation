@@ -1,4 +1,0 @@
----
-# vars file for extend_disk
-pool_path: /var/lib/libvirt/images
-size: 20G
