@@ -1,6 +1,0 @@
-- name : create a RHEL vm on remote kvm host
-  hosts: hypervisor
-  become: true
-  tasks:
-    - include_role:
-        name: hosninabil.kvm_terraform.rhel
