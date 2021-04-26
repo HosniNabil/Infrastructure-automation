@@ -1,0 +1,5 @@
+---
+# tasks file for kvm_add_interface
+- name: attach interface to vm
+  shell: |
+    virsh attach-interface --domain {{ vm_hostname }} --type network  --source {{ vm_network_x }} --model virtio  --config --live
