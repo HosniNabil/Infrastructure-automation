@@ -4,6 +4,3 @@
   tasks:
     - include_role:
         name: kvm_add_interface
-      vars:
-        vm_hostname: rhel8
-        vm_network_x: vlan42
