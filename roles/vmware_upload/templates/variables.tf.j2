@@ -23,5 +23,5 @@ variable "image_path" {
   default     = "{{ vm_image_path }}"
 }
 variable "image_dest" {
-  default     = "{{ dist }}-{{ version }}.qcow2"
+  default     = "{{ dist }}-{{ version }}.{{ format }}"
 }

@@ -1,8 +1,9 @@
 ---
 # vars file for vmware_upload
-rhel_7_path: /home/nabil/ISO/rhel-7.qcow2
-rhel_8_path: /home/nabil/ISO/rhel-8.qcow2
-centos_7_path: https://cloud.centos.org/centos/7/images/CentOS-7-aarch64-GenericCloud-2003.qcow2
-centos_8_path: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
-ubuntu_18_path: https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
-ubuntu_20_path: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-disk-kvm.img
+rhel_7_path: /home/nabil/ISO/rhel-server-7.7-x86_64-dvd.iso
+rhel_8_path: /home/nabil/ISO/rhel-8.3-x86_64-dvd.iso
+centos_8_path: http://mirrors.prometeus.net/centos/8.3.2011/isos/x86_64/CentOS-8.3.2011-x86_64-dvd1.iso
+centos_7_path: http://centos.mirror.garr.it/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-DVD-2009.iso
+ubuntu_18_path: https://releases.ubuntu.com/18.04/ubuntu-18.04.5-live-server-amd64.iso
+ubuntu_20_path: https://releases.ubuntu.com/20.04.2/ubuntu-20.04.2-live-server-amd64.iso
+format: "iso"
