@@ -1,0 +1,27 @@
+variable "vsphere_user" {
+  description = "vsphere username"
+  default     = "{{ vsphere_user }}"
+}
+variable "vsphere_password" {
+  description = "vsphere password"
+  default     = "{{ vsphere_password }}"
+}
+
+variable "vsphere_server" {
+  description = "vsphere server IP/domain"
+  default     = "{{ vsphere_server }}"
+}
+variable "vsphere_datacenter" {
+  default     = "{{ vsphere_datacenter }}"
+}
+variable "vsphere_datastore" {
+  default     = "{{ vsphere_datastore }}"
+}
+
+
+variable "image_path" {
+  default     = "{{ vm_image_path }}"
+}
+variable "image_dest" {
+  default     = "{{ dist }}-{{ version }}.qcow2"
+}

@@ -1,0 +1,8 @@
+---
+# vars file for vmware_upload
+rhel_7_path: /home/nabil/ISO/rhel-7.qcow2
+rhel_8_path: /home/nabil/ISO/rhel-8.qcow2
+centos_7_path: https://cloud.centos.org/centos/7/images/CentOS-7-aarch64-GenericCloud-2003.qcow2
+centos_8_path: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
+ubuntu_18_path: https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
+ubuntu_20_path: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-disk-kvm.img

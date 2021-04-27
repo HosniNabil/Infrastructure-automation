@@ -1,0 +1,64 @@
+---
+# tasks file for vmware_upload
+#set facts for image
+- name: Set variables for RHEL 7
+  set_fact:
+    vm_image_path: "{{ rhel_7_path }}"
+  when: dist == "rhel" and version == "7"
+- name: Set variables for RHEL 8
+  set_fact:
+    vm_image_path: "{{ rhel_8_path }}"
+  when: dist == "rhel" and version == "8"
+- name: Set variables for Centos 7
+  set_fact:
+    vm_image_url: "{{ centos_7_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.qcow2"
+  when: dist == "centos" and version == "7"
+- name: Set variables for Centos 8
+  set_fact:
+    vm_image_url: "{{ centos_8_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.qcow2"
+  when: dist == "centos" and version == "8"
+- name: Set variables for Ubuntu 18.04
+  set_fact:
+    vm_image_url: "{{ ubuntu_18_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.img"
+  when: dist == "ubuntu" and version == "18"
+- name: Set variables for Ubuntu 20.04
+  set_fact:
+    vm_image_url: "{{ ubuntu_20_path }}"
+    vm_image_path: "/root/{{ vm_hostname }}/{{ dist }}-{{ version }}.img"
+  when: dist == "ubuntu" and version == "20"
+#create project path
+- name: Create project path
+  file:
+    path: /root/vsphere/images
+    state: directory
+    mode: '0755'
+#download image if needed
+- name: Download Generic cloud image if needed
+  get_url:
+    url: "{{ vm_image_url }}"
+    dest: "/root/vsphere/images/{{ dist }}-{{ version }}.qcow2"
+  when: dist == "ubuntu" or dist == "centos"
+#copy main terraform file
+- name: Copy Terraform main file
+  copy:
+    src: main.tf
+    dest: "/root/vsphere/images/main.tf"
+#template terraform vars file
+- name: Templale Terraform variables file
+  template:
+    src: variables.tf.j2
+    dest: "/root/vsphere/images/variables.tf"
+# Hosts
+- name: Ensure static name resolution
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ vsphere_ip }} {{ vsphere_server }}"
+#terraform deploy
+- name: Upload image to vsphere
+  terraform:
+    project_path: "/root/vsphere/images"
+    state: present
+    force_init: true

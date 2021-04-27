@@ -1,0 +1,6 @@
+- name : Upload image/disk in vsphere
+  hosts: terraform_host
+  become: true
+  tasks:
+    - include_role:
+        name: vmware_upload
