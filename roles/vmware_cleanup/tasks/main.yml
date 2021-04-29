@@ -1,17 +1,29 @@
 ---
 # tasks file for vmware_cleanup
+- name: Set facts for VMs
+  set_facts:
+    full_path: "/root/vsphere/{{ vsphere_hostname }}"
+  when: resource == "vm"
+- name: Set facts for image
+  set_facts:
+    full_path: "/root/vsphere/images"
+  when: resource == "image"
+- name: Set facts for other resources
+  set_facts:
+    full_path: "{{ workdir }}"
+  when: resource == "others"
 - name: Check if directory exists
   stat:
-    path: "/root/vsphere/{{ vsphere_hostname }}"
+    path: "{{ full_path }}"
   register: workspace
 - name: cleanup terraform deployment
   terraform:
-    project_path: "/root/vsphere/{{ vsphere_hostname }}"
+    project_path: "{{ full_path }}"
     state: absent
     purge_workspace: True
   when: workspace.stat.exists
 - name: Delete workspace
   file:
-    path: "/root/vsphere/{{ vsphere_hostname }}"
+    path: "{{ full_path }}"
     state: absent
   when: workspace.stat.exists
