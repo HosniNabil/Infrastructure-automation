@@ -1,15 +1,15 @@
 ---
 # tasks file for vmware_cleanup
 - name: Set facts for VMs
-  set_facts:
+  set_fact:
     full_path: "/root/vsphere/{{ vsphere_hostname }}"
   when: resource == "vm"
 - name: Set facts for image
-  set_facts:
+  set_fact:
     full_path: "/root/vsphere/images"
   when: resource == "image"
 - name: Set facts for other resources
-  set_facts:
+  set_fact:
     full_path: "{{ workdir }}"
   when: resource == "others"
 - name: Check if directory exists
