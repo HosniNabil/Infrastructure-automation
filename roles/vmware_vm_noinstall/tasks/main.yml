@@ -1,0 +1,27 @@
+---
+# tasks file for
+- name: Create project path
+  file:
+    path: "/root/vsphere/{{ vsphere_hostname }}"
+    state: directory
+    mode: '0755'
+- name: Copy Terraform main file
+  copy:
+    src: "{{ item }}"
+    dest: "/root/vsphere/{{ vsphere_hostname }}/{{ item }}"
+  with_items:
+    - main.tf
+    - variables.tf
+- name: Templale Terraform variables file
+  template:
+    src: terraform.tfvars.j2
+    dest: "/root/vsphere/{{ vsphere_hostname }}/terraform.tfvars"
+- name: Ensure static name resolution
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ vsphere_ip }} {{ vsphere_server }}"
+- name: Upload VM on vsphere
+  terraform:
+    project_path: "/root/vsphere/{{vsphere_hostname }}"
+    state: present
+    force_init: true
