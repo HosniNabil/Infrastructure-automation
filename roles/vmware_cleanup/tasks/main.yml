@@ -1,11 +1,17 @@
 ---
 # tasks file for vmware_cleanup
+- name: Check if directory exists
+  stat:
+    path: "/root/vsphere/{{ vsphere_hostname }}"
+  register: workspace
 - name: cleanup terraform deployment
   terraform:
     project_path: "/root/vsphere/{{ vsphere_hostname }}"
     state: absent
     purge_workspace: True
+  when: workspace.stat.exists
 - name: Delete workspace
   file:
     path: "/root/vsphere/{{ vsphere_hostname }}"
     state: absent
+  when: workspace.stat.exists
