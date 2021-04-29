@@ -1,0 +1,6 @@
+- name: Clean up terraform deployment
+  hosts: kvm_host
+  become: true
+  tasks:
+    - include_role:
+        name: vmware_cleanup
