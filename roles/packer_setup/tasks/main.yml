@@ -1,0 +1,39 @@
+---
+# tasks file for packer_setup
+- name: Setup Packer in RHEL/CentOS environement
+  block:
+    - name: Ensure needed packages are installed
+      yum:
+        name: yum-utils
+        state: present
+    - name: Ensure Hashicorp's repo is enabled
+      yum_repository:
+        name: "{{ item.name }}"
+        baseurl: "{{ item.baseurl }}"
+        description: "{{ item. description }}"
+        gpgcheck: true
+        gpgkey: https://rpm.releases.hashicorp.com/gpg
+        enabled: "{{ item.enable }}"
+      with_items:
+        - { name: Hashicorp, baseurl: "https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable", description: "Hashicorp Stable - $basearch", enable: true }
+        - { name: HashicorpTest, baseurl: "https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/test", description: "Hashicorp Stable - $basearch", enable: false }
+    - name: Ensure Packer is installed
+      yum:
+        name: packer
+        state: present
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+- name: Setup Packer in Ubunutu/Devian environement
+  block:
+    - name: Add Hashicorp's gpg key
+      apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+    - name: Ensure Hashicorp's repo is enabled
+      apt_repository:
+        repo: https://apt.releases.hashicorp.com
+        state: present
+    - name: Ensure Packer is installed
+      yum:
+        name: packer
+        state: present
+  when: ansible_distribution == "Debian" or ansible_distribution ==  "Ubunutu"
