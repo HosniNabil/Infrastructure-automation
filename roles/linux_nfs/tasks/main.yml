@@ -34,7 +34,7 @@
   file:
     path: "/{{ shared_dir }}"
     state: directory
-    group: nfsnobody
+    group: "{{ dir_group }}"
     mode: "{{ permissions }}"
     setype: nfs_t
   when: redhat == true
