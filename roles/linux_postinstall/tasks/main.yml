@@ -3,7 +3,7 @@
 #set facts for dist
 #setup hostname FQDN
 - hostname:
-    name: "{{ vm_hostname }}"
+    name: "{{ vm_hostname }}.{{ vm_domain }}"
 #setup ssh
 - name: Setup SSH
   copy:
