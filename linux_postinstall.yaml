@@ -3,4 +3,4 @@
   become: true
   tasks:
     - include_role:
-        name: hosninabil.linux_server.post_install
+        name: linux_postinstall

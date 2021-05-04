@@ -1,0 +1,9 @@
+---
+# handlers file for linux_postinstall
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
+- name: rebooot host and wait to confirm
+  reboot:
+    test_command: echo "reboot done via ansible"

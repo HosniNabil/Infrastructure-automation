@@ -1,0 +1,36 @@
+---
+# tasks file for linux_postinstall
+#set facts for dist
+#setup hostname FQDN
+- hostname:
+    name: "{{ vm_hostname }}"
+#setup ssh
+- name: Setup SSH
+  copy:
+    src: sshd_conf
+    dest: /etc/ssh/sshd_conf
+    owner: root
+    group: root
+    mode: 0640
+  notify: Restart sshd
+- name: Reset Selinux context
+  file:
+    path: /etc/ssh/sshd_conf
+    seuser: system_u
+    setype: etc_t
+  when: ansible_os_family == "RedHat"
+  when: ansible_os_family == "RedHat"
+#setup rhsm if rhel
+- name:
+  redhat_subscription:
+    state: present
+    username: "{{ rhsm_user }}"
+    password: "{{ rhsm_pw }}"
+    pool_ids: "{{ rhsm_pool }}"
+  when: ansible_distribution == "RedHat"
+#update
+- name: update system
+  package:
+    name: '*'
+    state: latest
+  notify: rebooot host and wait to confirm
