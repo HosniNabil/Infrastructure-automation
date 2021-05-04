@@ -10,3 +10,9 @@
   shell: |
     qemu-img resize {{ pool_path }}/{{ vm_hostname }}.qcow2 +{{ size }}
   notify: Start VM
+- name:
+  wait_for: Wait for VM to become reachable
+    host: "{{ vm_ip }}"
+    port: 22
+    timeout: 60
+    msg: "Timeout waiting for VM to become reachable"
