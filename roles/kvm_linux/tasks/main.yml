@@ -83,3 +83,4 @@
     host: "{{ vm_ip }}"
     port: 22
     timeout: 60
+    msg: "Timeout waiting for VM to become reachable"
