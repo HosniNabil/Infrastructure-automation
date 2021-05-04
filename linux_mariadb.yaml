@@ -1,6 +1,6 @@
 - name: Setup mariadb
-  hosts: terraform
+  hosts: mariadb
   become: true
   tasks:
     - include_role:
-        name: hosninabil.linux_server.mariadb
+        name: linux_mariadb
