@@ -78,3 +78,8 @@
     project_path: "/root/{{ vm_hostname }}"
     state: present
     force_init: true
+- name:
+  wait_for:
+    host: "{{ vm_ip }}"
+    port: 22
+    timeout: 60

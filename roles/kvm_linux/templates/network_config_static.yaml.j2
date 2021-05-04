@@ -4,6 +4,6 @@ ethernets:
     dhcp4: false
     addresses:
       - {{ vm_ip }}
-    gateway4: {{ vm_gw }}
+    gateway4: {{ vm_gw }}/{{ vm_prefix }}
     nameservers:
       addresses: [{{ vm_dns }}]

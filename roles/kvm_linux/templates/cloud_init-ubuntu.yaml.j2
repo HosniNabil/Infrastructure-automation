@@ -6,7 +6,7 @@ write_files:
      version: 2
      ethernets:
       ens3:
-       addresses: [{{ vm_ip }}]
+       addresses: [{{ vm_ip }}/{{ vm_prefix }}]
        gateway4: {{ vm_gw }}
        dhcp4: false
        nameservers:
