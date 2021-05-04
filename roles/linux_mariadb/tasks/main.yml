@@ -37,6 +37,8 @@
     host_all: true
   when: set_root_pw == true
   notify: Restart mariadb
+- name: Flush all handlers
+  meta: flush_handlers
 - name: Set password
   set_fact:
     root_password: "{{ new_root_password }}"
