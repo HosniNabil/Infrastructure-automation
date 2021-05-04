@@ -1,0 +1,73 @@
+---
+# tasks file for linux_nfs
+# set facts
+- name: Set Facts for Centos/RHEL
+  block:
+    - name: Set facts for Centos/RHEL 7
+      set_fact:
+        packages: "nfs-utils, firewalld, python-firewall"
+        dir_group: nfsnobody
+      when: ansible_distribution_major_version is match('7')
+    - name: Set facts for Centos/RHEL 8
+      set_fact:
+        packages: "nfs-utils, firewalld, python3-firewall"
+        dir_group: nobody
+      when: ansible_distribution_major_version is match('8')
+    - name: Set facts for Centos/RHEL
+      set_fact:
+        redhat: true
+        service_name: nfs-server
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+- name: Set facts for Debian/Ubunutu
+  set_fact:
+    packages: "nfs-kernel-server, ufw"
+    redhat: false
+    dir_group: nogroup
+    service_name: nfs-kernel-server
+  when: ansible_distribution == "Debian" or ansible_distribution ==  "Ubunutu"
+# install packages
+- name: Install NFS required packages
+  package:
+    name: "{{ packages }}"
+    state: present
+- name: Create shared directory in Selinux enabled systems
+  file:
+    path: "/{{ shared_dir }}"
+    state: directory
+    group: nfsnobody
+    mode: "{{ permissions }}"
+    setype: nfs_t
+  when: redhat == true
+- name: Create shared directory in disabled Selinux systems
+  file:
+    path: "/{{ shared_dir }}"
+    state: directory
+    group: nfsnobody
+    mode: "{{ permissions }}"
+    owner: nobody
+  when: redhat == false
+- name: Add shared directory config to exports
+  lineinfile:
+    path: /etc/exports
+    state: present
+    line: "/{{ shared_dir }} *(rw,sync,no_root_squash)"
+  notify: Restart and enable nfs
+- name: Setup firewall for Centos/RHEL
+  block:
+    - name: Ensure Firewalld is active
+      service:
+        name: firewalld
+        state: started
+        enabled: true
+    - name: Allow NFS in firewalld
+      firewalld:
+        service: "{{ item }}"
+        permanent: true
+        immediate: true
+        state: enabled
+      with_items:
+        - nfs
+        - mountd
+        - rpc-bind
+  when: redhat == true
+## Can add ufw port allowing process for Debian/Ubunutu systems

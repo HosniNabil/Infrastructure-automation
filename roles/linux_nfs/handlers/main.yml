@@ -1,0 +1,7 @@
+---
+# handlers file for linux_nfs
+- name: Restart and enable nfs
+  service:
+    name: "{{ service_name }}"
+    state: restarted
+    enabled: true

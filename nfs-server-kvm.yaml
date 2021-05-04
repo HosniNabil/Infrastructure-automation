@@ -3,4 +3,4 @@
   become: true
   tasks:
     - include_role:
-        name: hosninabil.linux_server.nfs
+        name: linux_nfs
