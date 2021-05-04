@@ -1,6 +1,0 @@
-- name: Setup an NFS server
-  hosts: nfs
-  become: true
-  tasks:
-    - include_role:
-        name: linux_nfs
