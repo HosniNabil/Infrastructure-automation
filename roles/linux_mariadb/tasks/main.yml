@@ -6,11 +6,11 @@
     - name: Set facts for Centos/RHEL 7
       set_fact:
         packages: "python3-firewall, firewalld, python3-PyMySQL, mariadb-server"
-      when: ansible_distribution_major_version is match('7')
+      when: ansible_distribution_major_version is match('8')
     - name: Set facts for Centos/RHEL 8
       set_fact:
         packages: "mariadb-server , python-firewall, firewalld, python2-PyMySQL"
-      when: ansible_distribution_major_version is match('8')
+      when: ansible_distribution_major_version is match('7')
   when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
 - name: Set facts for Debian/Ubunutu
   set_fact:
@@ -79,7 +79,7 @@
     name: "{{ sql_db }}"
     state: present
     login_user: root
-    login_password: "{{ new_root_password }}"
+    login_password: "{{ root_password }}"
 # create user
 - name: Create user with all database privileges
   mysql_user:
