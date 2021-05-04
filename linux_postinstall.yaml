@@ -1,5 +1,5 @@
 - name : Post install
-  hosts: terraform
+  hosts: linux_hosts
   become: true
   tasks:
     - include_role:
