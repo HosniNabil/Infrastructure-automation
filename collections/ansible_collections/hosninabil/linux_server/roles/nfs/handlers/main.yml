@@ -1,7 +1,0 @@
----
-# handlers file for nfs
-- name: Restart and enable nfs
-  service:
-    name: nfs-server
-    state: restarted
-    enabled: true
