@@ -1,8 +1,13 @@
 ---
 # tasks file for kvm_cleanup
+- name: check if directory exist
+  stat:
+    path: "/root/{{ vm_hostname }}"
+  register: terraform_dir
 - name: cleanup terraform deployment
   terraform:
     project_path: "/root/{{ vm_hostname }}"
     state: absent
     purge_workspace: True
+  when: terraform_dir.stat.exists
 ## delete disks
