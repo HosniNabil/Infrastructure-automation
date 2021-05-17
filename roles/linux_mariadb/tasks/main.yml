@@ -3,11 +3,11 @@
 #set facts
 - name: Set Facts for Centos/RHEL
   block:
-    - name: Set facts for Centos/RHEL 7
+    - name: Set facts for Centos/RHEL 8
       set_fact:
         packages: "python3-firewall, firewalld, python3-PyMySQL, mariadb-server"
       when: ansible_distribution_major_version is match('8')
-    - name: Set facts for Centos/RHEL 8
+    - name: Set facts for Centos/RHEL 7
       set_fact:
         packages: "mariadb-server , python-firewall, firewalld, python2-PyMySQL"
       when: ansible_distribution_major_version is match('7')
