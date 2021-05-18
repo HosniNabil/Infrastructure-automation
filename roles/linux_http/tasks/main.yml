@@ -39,7 +39,7 @@
 #enable and start service
 - name: Restart httpd
   service:
-    name: http
+    name: httpd
     state: restarted
     enabled: true
   when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"

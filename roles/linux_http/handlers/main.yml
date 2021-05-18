@@ -2,7 +2,7 @@
 # handlers file for linux_http
 - name: Restart httpd
   service:
-    name: http
+    name: httpd
     state: restarted
 - name: Restart apache
   service:
