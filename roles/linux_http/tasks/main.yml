@@ -1,0 +1,51 @@
+---
+# tasks file for linux_http
+- name: Set Facts for Centos/RHEL
+  block:
+    - name: Set facts for Centos/RHEL 8
+      set_fact:
+        packages: "python3-firewall, firewalld, httpd"
+      when: ansible_distribution_major_version is match('8')
+    - name: Set facts for Centos/RHEL 7
+      set_fact:
+        packages: "httpd , python-firewall, firewalld"
+      when: ansible_distribution_major_version is match('7')
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+- name: Set facts for Debian/Ubunutu
+  set_fact:
+    packages: "apache2"
+  when: ansible_distribution == "Debian" or ansible_distribution ==  "Ubunutu"
+# install packages
+- name: Install http required packages
+  package:
+    name: "{{ packages }}"
+    state: present
+#enable firewall
+- name: Ensure Firewalld is active
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+- name: Add http/https service in firewalld
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  with_items:
+    - http
+    - https
+#copy files to document root
+#enable and start service
+- name: Restart httpd
+  service:
+    name: http
+    state: restarted
+    enabled: true
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+- name: Restart apache
+  service:
+    name: apache2
+    state: restarted
+    enabled: true
+  when: ansible_distribution == "Debian" or ansible_distribution ==  "Ubunutu"

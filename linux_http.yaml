@@ -1,0 +1,7 @@
+
+- name: Setup HTTP server
+  hosts: webservers
+  become: true
+  tasks:
+    - include_role:
+        name: linux_http

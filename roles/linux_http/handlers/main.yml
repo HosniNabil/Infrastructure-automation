@@ -1,0 +1,10 @@
+---
+# handlers file for linux_http
+- name: Restart httpd
+  service:
+    name: http
+    state: restarted
+- name: Restart apache
+  service:
+    name: apache2
+    state: restarted
