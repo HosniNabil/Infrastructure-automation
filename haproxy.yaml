@@ -1,6 +1,0 @@
-- name: Setup HAproxy
-  hosts: haproxy
-  become: true
-  tasks:
-    - include_role:
-        name: hosninabil.linux_server.haproxy
