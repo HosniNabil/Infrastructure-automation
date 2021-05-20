@@ -1,0 +1,50 @@
+
+- name: Cleanup Host for templating
+  hosts: template_node
+  become: true
+  tasks:
+    - name: Stop rsyslog and auditd services
+      service:
+        name: "{{ item }}"
+        state: stopped
+      with_items:
+        - rsyslog
+        - auditd
+    - name: Clean up package manager
+      command: yum clean all
+      args:
+        warn: no
+    - name: remove udev rules
+      block:
+        - find:
+            paths: /etc/udev/rules.d/
+            patterns: 70*
+          register: udev_rules
+        - file:
+            path: "{{ item.path }}"
+            state: absent
+          with_items: "{{ udev_rules }}"
+    # remove network config
+    - name: remove unetwork configuration
+      block:
+        - find:
+            paths: /etc/sysconfig/network_scripts/
+            patterns: ifcfg-*
+          register: network_conf
+        - file:
+            path: "{{ item.path }}"
+            state: absent
+          with_items: "{{ network_conf }}"
+    - name: remove tmp files
+      block:
+        - find:
+            paths: /var/tmp/
+            patterns: *
+          register: tmp_files
+        - file:
+            path: "{{ item.path }}"
+            state: absent
+          with_items: "{{ tmp_files }}"
+    # delete bash history
+    - name: delete bash history
+      command: history -c
