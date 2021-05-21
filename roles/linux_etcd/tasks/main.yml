@@ -64,7 +64,7 @@
 # #set facts for service file
 - name: set facts for service file
   set_fact:
-    name: "{{ \{$\{{ ansible_host }}\%\ }}"
+    name: "{{ '{$'{{ ansible_host }}'}' }}"
 - debug:
     msg: "{{ name }}"
 # etcd service
