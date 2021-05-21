@@ -6,7 +6,7 @@ Documentation=https://github.com/etcd-io/etcd
 Type=notify
 User=etcd
 ExecStart=/usr/local/bin/etcd \\
-  --name {{ [ '${', {{ ansible_hostname }}, '}' ] | join }}  \\
+  --name {{ [ "${", {{ ansible_hostname }}, '}' ] | join }}  \\
   --data-dir=/var/lib/etcd \\
   --initial-advertise-peer-urls http://${"{{ ansible_default_ipv4.address }}"}:2380 \\
   --listen-peer-urls http://${"{{ ansible_default_ipv4.address }}"}:2380 \\
