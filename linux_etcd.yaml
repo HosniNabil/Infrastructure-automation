@@ -1,0 +1,6 @@
+- name : Post install
+  hosts: etcd
+  become: true
+  tasks:
+    - include_role:
+        name: linux_etcd
