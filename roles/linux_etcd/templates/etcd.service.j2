@@ -16,7 +16,6 @@ ExecStart=/usr/local/bin/etcd \\
   --initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380 \\
   --initial-cluster-state new \
 
-{{ ["${", {{ ansible_hostname }}, "}" ] | join }} 
 [Install]
 WantedBy=multi-user.target
 EOF
