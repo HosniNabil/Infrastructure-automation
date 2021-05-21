@@ -58,7 +58,7 @@
     permanent: true
     immediate: true
     state: enabled
-  with items:
+  with_items:
     - 2379/tcp
     - 2380/tcp
 # etcd service
