@@ -1,9 +1,8 @@
 ---
 # tasks file for linux_postinstall
-#set facts for dist
 #setup hostname FQDN
 - hostname:
-    name: "{{ vm_hostname }}.{{ vm_domain }}"
+    name: "{{ inventory_hostname }}.{{ vm_domain }}"
 #setup ssh
 - name: Setup SSH
   copy:
