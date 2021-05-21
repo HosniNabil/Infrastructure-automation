@@ -5,70 +5,76 @@
   selinux:
     state: disabled
 # packages
-- name: Install needed packages
-  package:
-    name: wget, python3-firewall, firewalld
-    state: present
-  when: ansible_distribution_major_version is match('8')
-- name: Install needed packages
-  package:
-    name: wget, python-firewall, firewalld
-    state: present
-  when: ansible_distribution_major_version is match('7')
-
-#install etcd
-- name: Download and unarchive etcd package
-  unarchive:
-    src: "{{ etcd_url }}"
-    dest: /usr/local/bin/
-    remote_src: true
-# groupadd
-- name: Create etcd system group
-  group:
-    name: etcd
-    state: present
-    system: true
-#useradd
-- name: Create etcd system user
-  user:
-    name: etcd
-    state: present
-    shell: /sbin/nologin
-    system: true
-    group: etcd
-#config dir + chown
-- name: Create data and configuration diretories
-  file:
-    path: "{{ item.path }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-    state: directory
-  with_items:
-    - { path: '/etc/etcd', owner: root, group: root }
-    - { path: '/etc/lib/etcd', owner: etcd, group: root }
-#firewall
-- name: Ensure Firewalld is active
-  service:
-    name: firewalld
-    state: started
-    enabled: true
-- name: Allow ports in firewalld
-  firewalld:
-    port: "{{ item }}"
-    permanent: true
-    immediate: true
-    state: enabled
-  with_items:
-    - 2379/tcp
-    - 2380/tcp
+# - name: Install needed packages
+#   package:
+#     name: wget, python3-firewall, firewalld
+#     state: present
+#   when: ansible_distribution_major_version is match('8')
+# - name: Install needed packages
+#   package:
+#     name: wget, python-firewall, firewalld
+#     state: present
+#   when: ansible_distribution_major_version is match('7')
+#
+# #install etcd
+# - name: Download and unarchive etcd package
+#   unarchive:
+#     src: "{{ etcd_url }}"
+#     dest: /usr/local/bin/
+#     remote_src: true
+# # groupadd
+# - name: Create etcd system group
+#   group:
+#     name: etcd
+#     state: present
+#     system: true
+# #useradd
+# - name: Create etcd system user
+#   user:
+#     name: etcd
+#     state: present
+#     shell: /sbin/nologin
+#     system: true
+#     group: etcd
+# #config dir + chown
+# - name: Create data and configuration diretories
+#   file:
+#     path: "{{ item.path }}"
+#     owner: "{{ item.owner }}"
+#     group: "{{ item.group }}"
+#     state: directory
+#   with_items:
+#     - { path: '/etc/etcd', owner: root, group: root }
+#     - { path: '/etc/lib/etcd', owner: etcd, group: root }
+# #firewall
+# - name: Ensure Firewalld is active
+#   service:
+#     name: firewalld
+#     state: started
+#     enabled: true
+# - name: Allow ports in firewalld
+#   firewalld:
+#     port: "{{ item }}"
+#     permanent: true
+#     immediate: true
+#     state: enabled
+#   with_items:
+#     - 2379/tcp
+#     - 2380/tcp
+# #set facts for service file
+- name: set facts for service file
+  set_fact:
+    name: "{{ {%{$%}{{ ansible_host }}{%}%} }}"
+- debug:
+    msg: "{{ name }}"
 # etcd service
-- name: template etcd service file
-  template:
-    src: etcd.service.j2
-    dest: /etc/systemd/system/etcd.service
-- name: Enable service
-  systemd:
-    name: etcd
-    state: restarted
-    enabled: true
-    daemon_reload: true
+# - name: template etcd service file
+#   template:
+#     src: etcd.service.j2
+#     dest: /etc/systemd/system/etcd.service
+# - name: Enable service
+#   systemd:
+#     name: etcd
+#     state: restarted
+#     enabled: true
+#     daemon_reload: true
