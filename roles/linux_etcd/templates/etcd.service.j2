@@ -13,9 +13,10 @@ ExecStart=/usr/local/bin/etcd \\
   --listen-client-urls http://${"{{ ansible_default_ipv4.address }}"}:2379,http://127.0.0.1:2379 \\
   --advertise-client-urls http://${"{{ ansible_default_ipv4.address }}"}:2379 \\
   --initial-cluster-token etcd-cluster-0 \\
-  --initial-cluster etcdnode1=http://etcdnode1:2380,etcdnode2=http://etcdnode2:2380,etcdnode3=http://etcdnode3:2380 \\
+  --initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380 \\
   --initial-cluster-state new \
 
+{{ ["${", {{ ansible_hostname }}, "}" ] | join }} 
 [Install]
 WantedBy=multi-user.target
 EOF
