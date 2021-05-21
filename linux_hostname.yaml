@@ -1,0 +1,11 @@
+- name : Hostname
+  hosts: linux_hosts
+  serial: 1
+  become: true
+  tasks:
+    - name: set facts
+      set_fact:
+        host_num: "{{ host_num }}" + 1
+    - name: set hostname per host
+      hostname:
+        name: "{{ vm_hostname }}{{ host_num }}.{{ vm_domain }}"
