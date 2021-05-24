@@ -26,6 +26,7 @@
   copy:
     src: "/usr/local/bin/etcd-v3.4.16-linux-amd64/{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
+    mode: 0744
     remote_src: true
   with_items:
     - etcd
