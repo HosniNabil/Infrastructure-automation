@@ -4,4 +4,6 @@
   tasks:
     - include_role:
         name: kvm_cleanup
+      vars:
+        vm_hostname: "{{ item.vm_hostname }}"
       with_items: "{{ infra }}"

@@ -1,7 +1,7 @@
 
-[terraform_host]
+[terraform]
 10.112.42.55
-[terraform_host:vars]
+[terraform:vars]
 ansible_user = nabil
 [kvm_host]
 10.112.42.52
