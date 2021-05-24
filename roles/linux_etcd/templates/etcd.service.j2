@@ -5,13 +5,13 @@ Documentation=https://github.com/etcd-io/etcd
 [Service]
 Type=notify
 User=etcd
-ExecStart=/usr/local/bin/etcd \\
-  --name {{ start }}{{ ansible_hostname }}{{ end }} \\
-  --data-dir=/var/lib/etcd \\
-  --initial-advertise-peer-urls http://{{ start }}{{ ansible_default_ipv4.address }}{{ end }}:2380 \\
-  --listen-peer-urls http://{{ start }}{{ ansible_default_ipv4.address }}{{ end }}:2380 \\
-  --listen-client-urls http://{{ start }}{{ ansible_default_ipv4.address }}{{ end }}:2379,http://127.0.0.1:2379 \\
-  --advertise-client-urls http://{{ start }}{{ ansible_default_ipv4.address }}{{ end }}:2379 \\
+ExecStart=/usr/local/bin/etcd \
+  --name {{ ansible_hostname }} \
+  --data-dir=/var/lib/etcd \
+  --initial-advertise-peer-urls http://{{ ansible_default_ipv4.address }}:2380 \
+  --listen-peer-urls http://{{ ansible_default_ipv4.address }}:2380 \
+  --listen-client-urls http://{{ ansible_default_ipv4.address }}:2379,http://127.0.0.1:2379 \\
+  --advertise-client-urls http://{{ ansible_default_ipv4.address }}:2379 \
   --initial-cluster-token etcd-cluster-0 \\
   --initial-cluster etcdnode1=http://etcdnode1:2380,etcdnode2=http://etcdnode2:2380,etcdnode3=http://etcdnode3:2380 \\
   --initial-cluster-state new \
