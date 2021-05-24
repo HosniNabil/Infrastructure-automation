@@ -4,16 +4,3 @@
   tasks:
     - include_role:
         name: kvm_linux
-      vars:
-        vm_hostname: "{{ item.vm_hostname }}"
-        dist: "{{ item.dist }}"
-        version: "{{ item.version }}"
-        vm_cpu: "{{ item.vm_cpu }}"
-        vm_memory: "{{ item.vm_memory }}"
-        vm_network: "{{ item.vm_network }}"
-        vm_user: "{{ item.vm_user }}"
-        vm_ip: "{{ item.vm_ip }}"
-        vm_prefix: "{{ item.vm_prefix }}"
-        vm_gw: "{{ item.vm_gw }}"
-        vm_dns: "{{item.vm_gw }}"
-      with_items: "{{ infra }}"
