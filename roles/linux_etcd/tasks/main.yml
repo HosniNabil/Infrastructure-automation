@@ -44,7 +44,7 @@
     state: directory
   with_items:
     - { path: '/etc/etcd', owner: root, group: root }
-    - { path: '/etc/lib/etcd', owner: etcd, group: root }
+    - { path: '/var/lib/etcd', owner: etcd, group: root }
 #firewall
 - name: Ensure Firewalld is active
   service:
