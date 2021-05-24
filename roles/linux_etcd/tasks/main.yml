@@ -20,7 +20,7 @@
 - name: Download and unarchive etcd package
   unarchive:
     src: "{{ etcd_url }}"
-    dest: /usr/local/bin/etcd
+    dest: /usr/local/bin/
     remote_src: true
 - name: move etcd binaries
   copy:
