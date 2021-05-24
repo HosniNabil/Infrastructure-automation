@@ -19,7 +19,7 @@
 - name: Download and unarchive etcd package
   unarchive:
     src: "{{ etcd_url }}"
-    dest: /usr/local/bin/
+    dest: /usr/local/bin/etcd
     remote_src: true
 # groupadd
 - name: Create etcd system group
