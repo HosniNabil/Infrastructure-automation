@@ -4,6 +4,7 @@
 - name: Disable selinux
   selinux:
     state: disabled
+#reboot if needed
 #packages
 - name: Install needed packages
   package:
@@ -21,6 +22,18 @@
     src: "{{ etcd_url }}"
     dest: /usr/local/bin/etcd
     remote_src: true
+- name: move etcd binaries
+  copy:
+    src: "/usr/local/bin/etcd-v3.4.16-linux-amd64/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    remote_src: true
+  with_items:
+    - etcd
+    - etcdctl
+- name: remove uneeded directories
+  file:
+    path: /usr/local/bin/etcd-v3.4.16-linux-amd64
+    state: absent
 # groupadd
 - name: Create etcd system group
   group:
