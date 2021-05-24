@@ -65,9 +65,9 @@
   template:
     src: etcd.service.j2
     dest: /etc/systemd/system/etcd.service
-# - name: Enable service
-#   systemd:
-#     name: etcd
-#     state: restarted
-#     enabled: true
-#     daemon_reload: true
+- name: Enable service
+  systemd:
+    name: etcd
+    state: restarted
+    enabled: true
+    daemon_reload: true
