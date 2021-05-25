@@ -1,0 +1,10 @@
+- name : create a Linux VM on remote KVM host
+  hosts: kvm_host
+  become: true
+  tasks:
+    - name: Wait for VM to become reachable
+      wait_for:
+        host: "{{ vm_ip }}"
+        port: 22
+        timeout: 60
+        msg: "Timeout waiting for VM to become reachable"
