@@ -56,7 +56,7 @@
     - { src: variables.tf.j2, dest: '/root/{{ vm_hostname }}/variables.tf' }
     - { src: cloud_init.yaml.j2, dest: '/root/{{ vm_hostname }}/config/cloud_init.yaml' }
     - { src: network_config_static.yaml.j2, dest: '/root/{{ vm_hostname }}/config/network-config' }
-  when: dist == "rhel"
+  when: dist == "rhel" or dist == "centos"
 - name: Template variable and cloud-init files
   template:
     src: "{{ item.src }}"
