@@ -1,0 +1,19 @@
+---
+# tasks file for linux_crio
+#set facts
+- name: Set Facts for Centos 8
+  set_fact:
+    OS_version: CentOS_8
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version is match('8')
+#missing facts for centos7 and rhel and debian
+- name: Download Cri-o repositories
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ OS_version }}/devel:kubic:libcontainers:stable.repo", dest: /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo }
+    - { url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}/{{ OS_version }}/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo", dest: "/etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo" }
+- name: Install Cri-o
+  yum:
+    name: crio
+    state: present
