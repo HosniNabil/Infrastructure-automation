@@ -5,5 +5,5 @@
     - include_role:
         name: kvm_cleanup
       vars:
-        vm_hostname: "{{ item.vm_hostname }}"
+        vm_hostname: "{{ item }}"
       with_items: "{{ infra }}"
