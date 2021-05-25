@@ -11,7 +11,7 @@
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ OS_version }}/devel:kubic:libcontainers:stable.repo", dest: /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo }
+    - { url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ OS_version }}/devel:kubic:libcontainers:stable.repo", dest: "/etc/yum.repos.d/devel:kubic:libcontainers:stable.repo" }
     - { url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}/{{ OS_version }}/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo", dest: "/etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo" }
 - name: Install Cri-o
   yum:
