@@ -4,3 +4,5 @@
   tasks:
     - include_role:
         name: linux_crio
+      vars: ## to be removed
+        crio_version: "1.20"

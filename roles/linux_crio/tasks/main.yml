@@ -1,5 +1,5 @@
 ---
-# tasks file for linux_crio
+#tasks file for linux_crio
 #set facts
 - name: Set Facts for Centos 8
   set_fact:
@@ -15,5 +15,19 @@
     - { url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}/{{ OS_version }}/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo", dest: "/etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo" }
 - name: Install Cri-o
   yum:
-    name: crio
+    name: "cri-o"
     state: present
+- name: Replace cgroup in cri-o config file
+  replace:
+    path: /etc/crio/crio.conf
+    regexp: 'conmon_cgroup = ".*"'
+    replace: 'conmon_cgroup = "pod"'
+    backup: yes
+  notify: Restart and enable crio
+- name: Replace cgroup in cri-o config file
+  replace:
+    path: /etc/crio/crio.conf
+    regexp: 'cgroup_manager = ".*"'
+    replace: 'cgroup_manager = "cgroupfs"'
+    backup: yes
+  notify: Restart and enable crio

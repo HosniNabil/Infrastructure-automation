@@ -1,2 +1,7 @@
 ---
 # handlers file for linux_crio
+- name: Restart and enable crio
+  systemd:
+    name: crio
+    state: restarted
+    enabled: yes
