@@ -4,6 +4,3 @@
   tasks:
     - include_role:
         name: k8s_prep
-      vars:
-        node_type: "master"
-      tags: [master]
