@@ -1,6 +1,0 @@
-- name : Post install
-  hosts: k8s
-  become: true
-  tasks:
-    - include_role:
-        name: k8s_prep

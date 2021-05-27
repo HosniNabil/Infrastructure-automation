@@ -1,0 +1,8 @@
+- name : Prep k8s master
+  hosts: k8s_workers
+  become: true
+  tasks:
+    - include_role:
+        name: k8s_prep
+      vars:
+        node_type: "worker"
