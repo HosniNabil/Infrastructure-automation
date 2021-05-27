@@ -1,5 +1,5 @@
 [k8s]
-10.112.42.105
+k8smaster ansible_host=10.112.42.106
 
 
 [terraform]
