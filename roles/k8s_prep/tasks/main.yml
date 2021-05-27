@@ -13,12 +13,18 @@
     name: "{{ packages }}"
     state: present
 #disable swap
-- name: Disable swap
-  lineinfile:
-    path: /etc/fstab
-    regexp: '^(.*)swap(.*)$'
+- name: Remove swapfile from /etc/fstab
+  mount:
+    name: "{{ item }}"
+    fstype: swap
     state: absent
-    backup: yes
+  with_items:
+    - swap
+    - none
+  tags: always
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
   tags: always
 #disable selinux
 - name: Disable SElinux
@@ -119,7 +125,7 @@
     baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
     enabled: true
     gpgcheck: yes
-    gpgkey: [https://packages.cloud.google.com/yum/doc/yum-key.gpg, https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg]
+    gpgkey: ["https://packages.cloud.google.com/yum/doc/yum-key.gpg", "https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"]
     exclude: kubelet kubeadm kubectl
   tags: always
 - name: Install K8s required packages

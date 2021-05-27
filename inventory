@@ -1,7 +1,9 @@
 [k8s]
 k8smaster ansible_host=10.112.42.106
-
-
+[k8s_masters]
+k8smaster ansible_host=10.112.42.105
+[k8s_workers]
+k8sworker1 ansible_host=10.112.42.106
 [terraform]
 10.112.42.55
 [terraform:vars]
