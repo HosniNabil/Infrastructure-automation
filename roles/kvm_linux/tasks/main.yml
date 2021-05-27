@@ -56,7 +56,17 @@
     - { src: variables.tf.j2, dest: '/root/{{ vm_hostname }}/variables.tf' }
     - { src: cloud_init.yaml.j2, dest: '/root/{{ vm_hostname }}/config/cloud_init.yaml' }
     - { src: network_config_static.yaml.j2, dest: '/root/{{ vm_hostname }}/config/network-config' }
-  when: dist == "rhel" or dist == "centos"
+  when: dist == "rhel"
+- name: Template variable and cloud-init files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: main.tf.j2, dest: '/root/{{ vm_hostname }}/main.tf' }
+    - { src: variables.tf.j2, dest: '/root/{{ vm_hostname }}/variables.tf' }
+    - { src: cloud_init.yaml.j2, dest: '/root/{{ vm_hostname }}/config/cloud_init.yaml' }
+    - { src: network_config_static_centos8.yaml.j2, dest: '/root/{{ vm_hostname }}/config/network-config' }
+  when: dist == "centos"
 - name: Template variable and cloud-init files
   template:
     src: "{{ item.src }}"
