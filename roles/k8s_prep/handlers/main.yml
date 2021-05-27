@@ -1,0 +1,5 @@
+---
+# handlers file for k8s_prep
+- name : Reboot host and wait to confirm
+  reboot:
+    test_command: echo "reboot done via ansible"

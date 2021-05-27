@@ -1,0 +1,135 @@
+---
+# tasks file for k8s_prep
+- name: Set facts for Centos/RHEL 7
+  set_fact:
+    packages: "firewalld, python-firewall"
+  when: ansible_distribution_major_version is match('7')
+- name: Set facts for Centos/RHEL 8
+  set_fact:
+    packages: "firewalld, python3-firewall"
+  when: ansible_distribution_major_version is match('8')
+- name: Install required packages
+  package:
+    name: "{{ packages }}"
+    state: present
+#disable swap
+- name: Disable swap
+  lineinfile:
+    path: /etc/fstab
+    regexp: '^(.*)swap(.*)$'
+    state: absent
+    backup: yes
+  tags: always
+#disable selinux
+- name: Disable SElinux
+  selinux:
+    state: disabled
+  notify: Reboot host and wait to confirm
+  tags: always
+#net.bridge kernel module install and activate
+#configure sysctl
+- name: copy sysctl conf file
+  copy:
+    src: k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+  notify: Reboot host and wait to confirm
+  tags: always
+#setup firewalling
+- name: Ensure Firewalld is active
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+- name: Switch main interface to internal zone
+  firewalld:
+    interface: "{{ ansible_default_ipv4.interface }}"
+    zone: internal
+    permanent: true
+    state: enabled
+    immediate: true
+  tags: always
+- name: Setup masquerade in the internal zone
+  firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: true
+    zone: internal
+    immediate: true
+  tags: always
+- name: Add local network to zone sources
+  firewalld:
+    zone: internal
+    source: "{{ ansible_default_ipv4.network }}/{{ vm_prefix }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  tags: always
+# firewalld ports (tags for master and workers)
+- name: Add master ports in firewalld
+  firewalld:
+    zone: internal
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  with_items:
+    - 6443/tcp
+    - 2379/tcp
+    - 2380/tcp
+    - 10250/tcp
+    - 10251/tcp
+    - 10252/tcp
+    - 6783/tcp
+    - 6783/udp
+    - 6784/tcp
+    - 6784/udp
+  tags: master
+  when: node_type == "master"
+- name: Add worker ports in firewalld
+  firewalld:
+    zone: internal
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  with_items:
+    - 10250/tcp
+    - 8472/tcp
+    - 30000-32767/tcp
+    - 7472/tcp
+    - 6783/tcp
+    - 6783/udp
+    - 6784/tcp
+    - 6784/udp
+    - 443/tcp
+    - 3306/tcp
+    - 80/tcp
+    - 50000/tcp
+  tags: worker
+  when: node_type == "worker"
+- name: Change firewalld zone target
+  shell: |
+    firewall-cmd --zone=internal --set-target=ACCEPT
+    firewall-cmd --reload
+  tags: always
+- name: Add Kubernetes repositories
+  yum_repository:
+    name: kubernetes
+    description: Kubernetes
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    enabled: true
+    gpgcheck: yes
+    gpgkey: [https://packages.cloud.google.com/yum/doc/yum-key.gpg, https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg]
+    exclude: kubelet kubeadm kubectl
+  tags: always
+- name: Install K8s required packages
+  yum:
+    name: kubelet,kubeadm,kubectl
+    state: present
+    disable_excludes: kubernetes
+  tags: always
+- name: Enable kublet
+  systemd:
+    name: kubelet
+    state: started
+    enabled: true
