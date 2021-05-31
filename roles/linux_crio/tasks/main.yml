@@ -23,6 +23,7 @@
     regexp: 'conmon_cgroup = ".*"'
     replace: 'conmon_cgroup = "pod"'
     backup: yes
+  when: crio_version == "1.20"
   notify: Restart and enable crio
 - name: Replace cgroup in cri-o config file
   replace:
@@ -31,3 +32,4 @@
     replace: 'cgroup_manager = "cgroupfs"'
     backup: yes
   notify: Restart and enable crio
+  when: crio_version == "1.20"
