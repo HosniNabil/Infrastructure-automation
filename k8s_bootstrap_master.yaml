@@ -1,0 +1,6 @@
+- name : Prep k8s master
+  hosts: k8s_masters
+  become: true
+  tasks:
+    - include_role:
+        name: k8s_bootstrap

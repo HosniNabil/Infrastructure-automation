@@ -1,0 +1,29 @@
+---
+# tasks file for k8s_bootstrap
+- name: Kubeadm init
+  shell: |
+    kubeadm init --pod-network-cidr=10.32.0.0/12
+  register: kubeadm_output
+- name: show kubeadm init output
+  debug:
+    msg: "{{ kubeadm_output }}"
+- name: Create user kubeconfig
+  command: "{{ item }}"
+  with_items:
+    - "mkdir -p /home/{{ vm_user }}/.kube"
+    - "cp -i /etc/kubernetes/admin.conf /home/{{ vm_user }}/.kube/config"
+    - "chown {{ vm_user }}:{{ vm_user }} /home/{{ vm_user }}/.kube/config"
+- name: Install weave pod network
+  become: false
+  command: "kubectl apply -f {{ weave_url }}"
+- name: Generate join command
+  command: kubeadm token create --print-join-command
+  register: join_command
+- name: Copy join command to local file
+  local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
+- name: fetch join command file to controller
+  run_once: yes
+  fetch:
+    src: ./join-command
+    dest: .
+    flat: yes
