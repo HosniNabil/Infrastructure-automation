@@ -17,6 +17,7 @@
   yum:
     name: "cri-o"
     state: present
+  notify: Restart and enable crio
 - name: Replace cgroup in cri-o config file
   replace:
     path: /etc/crio/crio.conf
