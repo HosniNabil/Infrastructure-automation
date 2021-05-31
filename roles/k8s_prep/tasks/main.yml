@@ -33,6 +33,10 @@
   notify: Reboot host and wait to confirm
   tags: always
 #net.bridge kernel module install and activate
+- name: Ensure netfilter kernel module is loaded
+  modprobe:
+    name: br_netfilter
+    state: present
 #configure sysctl
 - name: copy sysctl conf file
   copy:
@@ -139,3 +143,9 @@
     name: kubelet
     state: started
     enabled: true
+  tags: always
+- name: Add enteries in /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item }}"
+  with_items: "{{ k8s_hosts }}"
