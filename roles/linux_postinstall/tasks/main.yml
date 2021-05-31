@@ -32,3 +32,4 @@
     name: '*'
     state: latest
   notify: rebooot host and wait to confirm
+  when: system_update == true
