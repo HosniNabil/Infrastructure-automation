@@ -44,7 +44,7 @@
     state: touch
     path: /etc/modules-load.d/br_netfilter.conf
 - name: add br netfilter module to autoload
-  linefile:
+  lineinfile:
     path: /etc/modules-load.d/br_netfilter.conf
     line: br_netfilter
 #setup firewalling
