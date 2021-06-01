@@ -12,6 +12,7 @@
     group: root
     mode: 0640
   notify: Restart sshd
+  when: ssh_hardening == true
 - name: Reset Selinux context
   file:
     path: /etc/ssh/sshd_conf
