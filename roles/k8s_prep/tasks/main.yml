@@ -32,14 +32,6 @@
     state: disabled
   notify: Reboot host and wait to confirm
   tags: always
-#net.bridge kernel module install and activate
-# - name: Ensure netfilter kernel module is loaded
-#   modprobe:
-#     name: br_netfilter
-#     state: present
-- name: ensure br netfilter module is loaded
-  shell: |
-    modprobe br_netfilter
 #configure sysctl
 - name: copy sysctl conf file
   copy:
@@ -47,6 +39,14 @@
     dest: /etc/sysctl.d/k8s.conf
   notify: Reboot host and wait to confirm
   tags: always
+- name: Create autoload module file
+  file:
+    state: touch
+    path: /etc/modules-load.d/br_netfilter.conf
+- name: add br netfilter module to autoload
+  linefile:
+    path: /etc/modules-load.d/br_netfilter.conf
+    line: br_netfilter
 #setup firewalling
 - name: Ensure Firewalld is active
   service:
@@ -152,3 +152,8 @@
     path: /etc/hosts
     line: "{{ item }}"
   with_items: "{{ k8s_hosts }}"
+#net.bridge kernel module install and activate
+- name: Ensure netfilter kernel module is loaded
+  modprobe:
+    name: br_netfilter
+    state: present
