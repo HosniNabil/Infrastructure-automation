@@ -1,0 +1,24 @@
+- name : Join worker nodes
+  hosts: k8s_workers
+  become: true
+  tasks:
+    - name: Add ssh key to workers
+      authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ keypub }}"
+      with_items:
+        - root
+        - nabil
+    - name: copy join command file
+      synchronize:
+        src: /root/join_command
+        dest: /root/join_command
+      delegate_to: "{{ master_ip }}"
+    - name: Join node
+      shell: |
+        sh /root/join_command
+      register: output
+    - name: pring join command output
+      debug:
+        msg: "{{ output.stdout }}"
