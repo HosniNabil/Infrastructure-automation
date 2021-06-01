@@ -4,6 +4,7 @@
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+    mode: '0600'
   with_items:
     - { src: id_rsa, dest: "/root/.ssh/id_rsa"}
     - { src: id_rsa.pub, dest: "/root/.ssh/id_rsa.pub"}
