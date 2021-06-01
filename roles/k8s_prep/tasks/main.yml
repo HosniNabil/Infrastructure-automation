@@ -149,7 +149,3 @@
     path: /etc/hosts
     line: "{{ item }}"
   with_items: "{{ k8s_hosts }}"
-- name: generate key pairs
-  openssh_keypair:
-    state: present
-    path: /root/.ssh/

@@ -1,5 +1,12 @@
 ---
 # tasks file for k8s_bootstrap
+- name: Copy ssh keypair to master
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: id_rsa, dest: "/root/.ssh/id_rsa"}
+    - { src: id_rsa.pub, dest: "/root/.ssh/id_rsa.pub"}
 - name: Kubeadm init
   shell: |
     kubeadm init --pod-network-cidr=10.32.0.0/12
@@ -19,7 +26,12 @@
 - name: Generate join command
   command: kubeadm token create --print-join-command
   register: join_command
+- name: Create join command file
+  file:
+    path: /root/join_command
+    state: touch
+    mode: '0755'
 - name: Create file with join command
   lineinfile:
-    path: join_command
-    line: "{{ join_command }}"
+    path: /root/join_command
+    line: "{{ join_command.stdout_lines[0] }}"
