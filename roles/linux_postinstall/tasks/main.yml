@@ -18,7 +18,7 @@
     path: /etc/ssh/sshd_conf
     seuser: system_u
     setype: etc_t
-  when: ansible_os_family == "RedHat"
+  when: ssh_hardening == true and ansible_os_family == "RedHat"
 #setup rhsm if rhel
 - name:
   redhat_subscription:
