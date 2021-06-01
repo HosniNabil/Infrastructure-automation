@@ -19,11 +19,7 @@
 - name: Generate join command
   command: kubeadm token create --print-join-command
   register: join_command
-- name: Copy join command to local file
-  local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
-- name: fetch join command file to controller
-  run_once: yes
-  fetch:
-    src: ./join-command
-    dest: .
-    flat: yes
+- name: Create file with join command
+  lineinfile:
+    path: ./join_command
+    line: "{{ join_command }}"
