@@ -1,4 +1,4 @@
-- name : Prep k8s master
+- name : Boostrap master
   hosts: k8s_masters
   become: true
   tasks:
