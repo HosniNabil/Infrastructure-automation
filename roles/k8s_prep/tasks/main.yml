@@ -33,10 +33,13 @@
   notify: Reboot host and wait to confirm
   tags: always
 #net.bridge kernel module install and activate
-- name: Ensure netfilter kernel module is loaded
-  modprobe:
-    name: br_netfilter
-    state: present
+# - name: Ensure netfilter kernel module is loaded
+#   modprobe:
+#     name: br_netfilter
+#     state: present
+- name: ensure br netfilter module is loaded
+  shell: |
+    modprobe br_netfilter
 #configure sysctl
 - name: copy sysctl conf file
   copy:
